@@ -5,3 +5,12 @@
 #newPost_container:focus-visible{
     outline: none;
 }
+
+.disabled{
+    cursor: not-allowed;
+}
+
+.error_newPost{
+    color: red;
+    font-weight: bolder;
+}   
