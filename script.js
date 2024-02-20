@@ -13,5 +13,7 @@ window.onload = function () {
         }
     })
 
-    let header = document.getElementsByTagName('header')
+    let newPost_container = document.getElementById('newPost_container')
+
+    
 }
