@@ -39,17 +39,33 @@
     <main style="display: flex; flex-direction: column; margin-top: 30%; margin-bottom: 20%;">
         <!-- Ajouter un tweet au fil -->
         <div style="display: flex; justify-content: center; align-items: center;">
-            <div style="width: 600px; display: flex; justify-content: center; align-items: center; border: 1px solid lightgray;">
+            <div
+                style="width: 600px; display: flex; justify-content: center; align-items: center; border: 1px solid lightgray;">
                 <div>
-                    <input id="newPost_container" type="text" placeholder="Quoi de neuf aujourd'hui ?">
-                    <span id="newPost_length" class="">0</span>
-                    <span id="newPost_maxLength" class=""> / 140 </span>
-                    <button id="newPost_button" type="submit" style="width: fit-content; height: 25px; background-color: white;   background-color: blue; border: none; color: white; padding: 0px 32px;text-align: center;text-decoration: none;">POST</button>
+                    <form action="" method="POST">
+                        <input id="newPost_container" name="newTweet" type="text"
+                            placeholder="Quoi de neuf aujourd'hui ?">
+                        <span id="newPost_length" class="">0</span>
+                        <span id="newPost_maxLength" class=""> / 140 </span>
+                        <button id="newPost_button" class="disabled" type="submit"
+                            style="width: fit-content; height: 25px; background-color: white;   background-color: blue; border: none; color: white; padding: 0px 32px;text-align: center;text-decoration: none;">POST</button>
+                    </form>
                 </div>
-                    <span id="error_newPost" class="error_newPost"></span>
+                <span id="error_newPost" class="error_newPost"></span>
             </div>
         </div>
         <!-- fil d'actualite -->
+        <?php
+            include('addTweet.php');
+
+            $db = new Database('twitter_jour2');
+            $newTweet = $_POST['newTweet'];
+            if(mb_strlen($newTweet) == 0){
+                return;
+            }else{
+                $db->addNewTweet(724, $newTweet);
+            }
+        ?>
         <div style="display: flex; justify-content: center;">
             <div
                 style="display: flex; flex-direction: column; margin: 25px 0px; border: 1px solid lightblue; width: 600px; height: fit-content; padding: 20px 0px; background-color: rgb(236, 236, 236);">
