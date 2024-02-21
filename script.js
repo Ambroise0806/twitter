@@ -19,24 +19,15 @@ window.onload = function () {
     
     function CharTweet(){
         let errorNewPost = document.getElementById('error_newPost')    
-        let tweetContent = newPost_container.value
         let tweetContentLength = newPost_container.textLength
-        console.log(tweetContentLength)
         
         if(tweetContentLength == 0){
-            console.log('toto1')
             errorNewPost.innerHTML= ""
             newPost_button.classList.add('disabled')
         }else if(tweetContentLength > 140){
-            console.log('toto2')
             errorNewPost.innerHTML= "Votre tweet ne peut pas dépasser 140 charactères !"
             newPost_button.classList.add('disabled')
-        }else if(!tweetContent.match(/^[a-z ,.'-]*$/i)){
-            console.log('toto3')
-            errorNewPost.innerHTML= "Votre tweet contient des charactères interdit. Charactères autorisés: Lettres de \"a\" à \"z\", la virgule, le point, l\'apostrophe, le tiret !"
-            newPost_button.classList.add('disabled')
         }else{
-            console.log('toto4')
             errorNewPost.innerHTML= ""
             newPost_button.classList.remove('disabled')
         }

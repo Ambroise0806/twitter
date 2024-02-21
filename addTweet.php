@@ -29,28 +29,14 @@ class Database {
         return $this->pdo;
     }
 
-    public function verifyTweetLength($content){
+    private function verifyTweetLength($content){
         return mb_strlen($content, 'utf8') <= 140;
-    }
-
-    public function verifyChar($content){
-        $regex = "/^[a-zA-Z ,.'-]+$/";
-        $matches = preg_match($regex, $content);
-        if($matches > 0){
-            return true;
-        }else{
-            return false;
-        }
     }
 
     public function addNewTweet($userId, $content)
     {
         if (!$this->verifyTweetLength($content)) {
             throw new InvalidArgumentException("Votre tweet ne peut pas dépasser 140 charactères !");
-        }
-
-        if (!$this->verifyChar($content)) {
-            throw new InvalidArgumentException("Votre tweet contient des charactères interdit. Charactères autorisés: Lettres de \"a\" à \"z\", la virgule, le point, l\'apostrophe, le tiret !");
         }
 
         try {
@@ -64,6 +50,39 @@ class Database {
             throw $e;
         }
     }
-}
 
+    public function getLastTweet($userId){
+        try {
+            $sql = "SELECT username, AtUsername, time, content FROM tweet INNER JOIN user ON tweet.id_user = user.id WHERE id_user = :id_user ORDER BY tweet.id DESC LIMIT 1;";
+            $statement = $this->getPDO()->prepare($sql);
+            $statement->bindParam(':id_user', $userId);
+            $statement->execute();
+            $result = $statement->fetchAll();
+            if(!empty($result)){
+                $filename = "tweet.json";
+                $data =json_encode($result);
+                if (is_writable($filename)) {
+                    if (!$stream = fopen($filename, 'w+')) {
+                        throw new InvalidArgumentException("Impossible d'ouvrir le fichier ($filename)");
+                        exit;
+                    }
+                    if (fwrite($stream, $data) === FALSE) {
+                        throw new InvalidArgumentException("Impossible d'écrire dans le fichier ($filename)");
+                        exit;
+                    }
+                    throw new InvalidArgumentException("L'écriture de ($data) dans le fichier ($filename) a réussi");
+                    fclose($stream);
+                
+                } else {
+                    throw new InvalidArgumentException("Le fichier $filename n'est pas accessible en écriture.");
+                }
+            }else{
+                throw new InvalidArgumentException("le tableau est vide !");
+            }
+        } catch(PDOException $e) {
+            echo "Database error: " . $e->getMessage();
+            throw $e;
+        }
+    }
+}
 ?>

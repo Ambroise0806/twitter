@@ -55,17 +55,6 @@
             </div>
         </div>
         <!-- fil d'actualite -->
-        <?php
-            include('addTweet.php');
-
-            $db = new Database('twitter_jour2');
-            $newTweet = $_POST['newTweet'];
-            if(mb_strlen($newTweet) == 0){
-                return;
-            }else{
-                $db->addNewTweet(724, $newTweet);
-            }
-        ?>
         <div style="display: flex; justify-content: center;">
             <div
                 style="display: flex; flex-direction: column; margin: 25px 0px; border: 1px solid lightblue; width: 600px; height: fit-content; padding: 20px 0px; background-color: rgb(236, 236, 236);">
@@ -368,4 +357,12 @@
 </body>
 
 </html>
-<!-- header->sticky main->scrollable footer->fixed -->
+<?php
+    include('addTweet.php');
+
+    $newTweet = $_POST['newTweet'];
+
+    $db = new Database('twitter_jour2');
+    $db->addNewTweet(1, $newTweet);
+    $db->getLastTweet(1);
+?>
