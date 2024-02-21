@@ -1,0 +1,28 @@
+.error_css_input {
+    border: 2px solid purple;
+}
+.noError {
+    border: 2px solid green;
+}
+#nom{
+    outline: none;
+}
+#email {
+    outline: none;
+}
+.blue {
+    border: 2px solid blue;
+}
+.remove {
+    border: none;
+}
+
+#jour {
+    outline: none;
+}
+#mois {
+    outline: none;
+}
+#annee {
+    outline: none;
+}

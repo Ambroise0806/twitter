@@ -3,7 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="form.css">
+        <link rel="stylesheet" href="">
+        <script src="inscription.js"></script>
         <title>Page de connexion</title>
     </head> 
     <body>
@@ -31,7 +32,7 @@
             $this->base = new PDO("mysql:host=$this->host;dbname=$this->dbName", $this->user, $this->password);
             $this->base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (Exception $e) {
-            echo "" . $e->getMessage();
+            echo "". $e->getMessage();
         }
     }
 
