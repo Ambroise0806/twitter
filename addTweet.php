@@ -22,8 +22,8 @@ class Database {
                 $this->pdo = new PDO($dsn, $this->db_user, $this->db_pass);
                 $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch(PDOException $e) {
-                echo "Database error: " . $e->getMessage();
-                throw $e;
+                throw new InvalidArgumentException("Database error: " . $e->getMessage());
+
             }
         }
         return $this->pdo;
@@ -38,7 +38,7 @@ class Database {
         if (!$this->verifyTweetLength($content)) {
             throw new InvalidArgumentException("Votre tweet ne peut pas dépasser 140 charactères !");
         }
-
+        
         try {
             $sql = "INSERT INTO tweet (id_user, content) VALUES (:id_user, :content)";
             $statement = $this->getPDO()->prepare($sql);
@@ -46,16 +46,14 @@ class Database {
             $statement->bindParam(':content', $content);
             $statement->execute();
         } catch(PDOException $e) {
-            echo "Database error: " . $e->getMessage();
-            throw $e;
+            throw new InvalidArgumentException("Query error: " . $e->getMessage());
         }
     }
 
-    public function getLastTweet($userId){
+    public function getTweet(){
         try {
-            $sql = "SELECT username, AtUsername, time, content FROM tweet INNER JOIN user ON tweet.id_user = user.id WHERE id_user = :id_user ORDER BY tweet.id DESC LIMIT 1;";
+            $sql = "SELECT username, AtUsername, time, content FROM tweet INNER JOIN user ON tweet.id_user = user.id ORDER BY tweet.id DESC;";
             $statement = $this->getPDO()->prepare($sql);
-            $statement->bindParam(':id_user', $userId);
             $statement->execute();
             $result = $statement->fetchAll();
             if(!empty($result)){
@@ -80,8 +78,7 @@ class Database {
                 throw new InvalidArgumentException("le tableau est vide !");
             }
         } catch(PDOException $e) {
-            echo "Database error: " . $e->getMessage();
-            throw $e;
+            throw new InvalidArgumentException("Query error: " . $e->getMessage());
         }
     }
 }

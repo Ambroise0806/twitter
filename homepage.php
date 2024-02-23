@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="script.js"></script>
+    <script src="homepage.js"></script>
+    <!-- <script src="ajax.js"></script> -->
     <link rel="stylesheet" href="style.css">
     <title>Twitter</title>
 </head>
@@ -56,24 +57,23 @@
         </div>
         <!-- fil d'actualite -->
         <div style="display: flex; justify-content: center;">
-            <div
-                style="display: flex; flex-direction: column; margin: 25px 0px; border: 1px solid lightblue; width: 600px; height: fit-content; padding: 20px 0px; background-color: rgb(236, 236, 236);">
+            <div style="display: flex; flex-direction: column; margin: 25px 0px; border: 1px solid lightblue; width: 600px; height: fit-content; padding: 20px 0px; background-color: rgb(236, 236, 236);">
                 <div style="height: fit-content;">
                     <div style="display: flex; justify-content: center; width: fit-content;">
                         <img src="assets/pp_nav.jpg" style="width: 7%; height: 25%; border-radius: 100%;"
                             alt="Icon de profile">
                         <div style="display: flex; flex-direction: column;">
                             <div style="display: flex;">
-                                <h1 style="margin: 0px 15px;">Username</h6>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;">@useraccount</span>
+                                <h1 id="username0" style="margin: 0px 15px;"></h1>
+                                    <span id="atUsername0"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;"></span>
                                     <span
                                         style="align-items: self-start;display: flex;padding-top: 5px;margin-left: 15px; font-size: larger; font-weight: bolder;">.</span>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;">Feb-19</span>
+                                    <span id="date0"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;"></span>
                             </div>
                             <div style="width: fit-content;margin-left: 20px;">
-                                <p>User comment blablablabla</p>
+                                <p id="content0"></p>
                             </div>
                         </div>
                     </div>
@@ -92,16 +92,16 @@
                             alt="Icon de profile">
                         <div style="display: flex; flex-direction: column;">
                             <div style="display: flex;">
-                                <h1 style="margin: 0px 15px;">Username</h6>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;">@useraccount</span>
+                                <h1 id="username1" style="margin: 0px 15px;"></h1>
+                                    <span id="atUsername1"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;"></span>
                                     <span
                                         style="align-items: self-start;display: flex;padding-top: 5px;margin-left: 15px; font-size: larger; font-weight: bolder;">.</span>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;">Feb-19</span>
+                                    <span id="date1"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;"></span>
                             </div>
                             <div style="width: fit-content;margin-left: 20px;">
-                                <p>User comment blablablabla</p>
+                                <p id="content1"></p>
                             </div>
                         </div>
                     </div>
@@ -120,16 +120,16 @@
                             alt="Icon de profile">
                         <div style="display: flex; flex-direction: column;">
                             <div style="display: flex;">
-                                <h1 style="margin: 0px 15px;">Username</h6>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;">@useraccount</span>
+                                <h1 id="username2" style="margin: 0px 15px;"></h1>
+                                    <span id="atUsername2"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;"></span>
                                     <span
                                         style="align-items: self-start;display: flex;padding-top: 5px;margin-left: 15px; font-size: larger; font-weight: bolder;">.</span>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;">Feb-19</span>
+                                    <span id="date2"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;"></span>
                             </div>
                             <div style="width: fit-content;margin-left: 20px;">
-                                <p>User comment blablablabla</p>
+                                <p id="content2"></p>
                             </div>
                         </div>
                     </div>
@@ -148,16 +148,16 @@
                             alt="Icon de profile">
                         <div style="display: flex; flex-direction: column;">
                             <div style="display: flex;">
-                                <h1 style="margin: 0px 15px;">Username</h6>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;">@useraccount</span>
+                                <h1 id="username3" style="margin: 0px 15px;"></h1>
+                                    <span id="atUsername3"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;"></span>
                                     <span
                                         style="align-items: self-start;display: flex;padding-top: 5px;margin-left: 15px; font-size: larger; font-weight: bolder;">.</span>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;">Feb-19</span>
+                                    <span id="date3"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;"></span>
                             </div>
                             <div style="width: fit-content;margin-left: 20px;">
-                                <p>User comment blablablabla</p>
+                                <p id="content3"></p>
                             </div>
                         </div>
                     </div>
@@ -176,16 +176,16 @@
                             alt="Icon de profile">
                         <div style="display: flex; flex-direction: column;">
                             <div style="display: flex;">
-                                <h1 style="margin: 0px 15px;">Username</h6>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;">@useraccount</span>
+                                <h1 id="username4" style="margin: 0px 15px;"></h1>
+                                    <span id="atUsername4"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;"></span>
                                     <span
                                         style="align-items: self-start;display: flex;padding-top: 5px;margin-left: 15px; font-size: larger; font-weight: bolder;">.</span>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;">Feb-19</span>
+                                    <span id="date4"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;"></span>
                             </div>
                             <div style="width: fit-content;margin-left: 20px;">
-                                <p>User comment blablablabla</p>
+                                <p id="content4"></p>
                             </div>
                         </div>
                     </div>
@@ -204,16 +204,16 @@
                             alt="Icon de profile">
                         <div style="display: flex; flex-direction: column;">
                             <div style="display: flex;">
-                                <h1 style="margin: 0px 15px;">Username</h6>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;">@useraccount</span>
+                                <h1 id="username5" style="margin: 0px 15px;"></h1>
+                                    <span id="atUsername5"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;"></span>
                                     <span
                                         style="align-items: self-start;display: flex;padding-top: 5px;margin-left: 15px; font-size: larger; font-weight: bolder;">.</span>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;">Feb-19</span>
+                                    <span id="date5"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;"></span>
                             </div>
                             <div style="width: fit-content;margin-left: 20px;">
-                                <p>User comment blablablabla</p>
+                                <p id="content5"></p>
                             </div>
                         </div>
                     </div>
@@ -232,16 +232,16 @@
                             alt="Icon de profile">
                         <div style="display: flex; flex-direction: column;">
                             <div style="display: flex;">
-                                <h1 style="margin: 0px 15px;">Username</h6>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;">@useraccount</span>
+                                <h1 id="username6" style="margin: 0px 15px;"></h1>
+                                    <span id="atUsername6"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;"></span>
                                     <span
                                         style="align-items: self-start;display: flex;padding-top: 5px;margin-left: 15px; font-size: larger; font-weight: bolder;">.</span>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;">Feb-19</span>
+                                    <span id="date6"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;"></span>
                             </div>
                             <div style="width: fit-content;margin-left: 20px;">
-                                <p>User comment blablablabla</p>
+                                <p id="content6"></p>
                             </div>
                         </div>
                     </div>
@@ -260,16 +260,16 @@
                             alt="Icon de profile">
                         <div style="display: flex; flex-direction: column;">
                             <div style="display: flex;">
-                                <h1 style="margin: 0px 15px;">Username</h6>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;">@useraccount</span>
+                                <h1 id="username7" style="margin: 0px 15px;"></h1>
+                                    <span id="atUsername7"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;"></span>
                                     <span
                                         style="align-items: self-start;display: flex;padding-top: 5px;margin-left: 15px; font-size: larger; font-weight: bolder;">.</span>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;">Feb-19</span>
+                                    <span id="date7"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;"></span>
                             </div>
                             <div style="width: fit-content;margin-left: 20px;">
-                                <p>User comment blablablabla</p>
+                                <p id="content7"></p>
                             </div>
                         </div>
                     </div>
@@ -288,16 +288,16 @@
                             alt="Icon de profile">
                         <div style="display: flex; flex-direction: column;">
                             <div style="display: flex;">
-                                <h1 style="margin: 0px 15px;">Username</h6>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;">@useraccount</span>
+                                <h1 id="username8" style="margin: 0px 15px;"></h1>
+                                    <span id="atUsername8"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;"></span>
                                     <span
                                         style="align-items: self-start;display: flex;padding-top: 5px;margin-left: 15px; font-size: larger; font-weight: bolder;">.</span>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;">Feb-19</span>
+                                    <span id="date8"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;"></span>
                             </div>
                             <div style="width: fit-content;margin-left: 20px;">
-                                <p>User comment blablablabla</p>
+                                <p id="content8"></p>
                             </div>
                         </div>
                     </div>
@@ -316,16 +316,16 @@
                             alt="Icon de profile">
                         <div style="display: flex; flex-direction: column;">
                             <div style="display: flex;">
-                                <h1 style="margin: 0px 15px;">Username</h6>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;">@useraccount</span>
+                                <h1 id="username9" style="margin: 0px 15px;"></h1>
+                                    <span id="atUsername9"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;"></span>
                                     <span
                                         style="align-items: self-start;display: flex;padding-top: 5px;margin-left: 15px; font-size: larger; font-weight: bolder;">.</span>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;">Feb-19</span>
+                                    <span id="date9"
+                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;"></span>
                             </div>
                             <div style="width: fit-content;margin-left: 20px;">
-                                <p>User comment blablablabla</p>
+                                <p id="content9"></p>
                             </div>
                         </div>
                     </div>
@@ -334,6 +334,9 @@
                     <img src="assets/zoro.png" style="width: 30%;" alt="Image d'un tweetos">
                 </div>
             </div>
+        </div>
+        <div style="display: flex; justify-content: center; margin-top: 75px">
+            <img id="loading_gif" class="hidden" src="assets/Skype loader.gif" alt="loading gif">
         </div>
     </main>
     <footer style="background-color: #e0e0d3; position: fixed; bottom: 0; width: 100%;">
@@ -362,7 +365,7 @@
 
     $newTweet = $_POST['newTweet'];
 
-    $db = new Database('twitter_jour2');
+    $db = new Database('twitter');
     $db->addNewTweet(1, $newTweet);
-    $db->getLastTweet(1);
+    $db->getTweet();
 ?>
