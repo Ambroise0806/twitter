@@ -73,20 +73,43 @@ window.onload = function () {
         xhttp.open("GET", "tweet.json")
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
+                // console.log(this.responseText)
                 let response = JSON.parse(this.responseText);
                     for(let i=0; i<10; i++){
                         let username = document.getElementById('username'+ i)
                         username.innerHTML= (response[id_tweet]['username'])
                         let atUsername = document.getElementById('atUsername'+i)
-                        atUsername.innerHTML= (response[id_tweet]['AtUsername'])
+                        atUsername.innerHTML= (response[id_tweet]['at_user_name'])
                         let date = document.getElementById('date'+i)
                         date.innerHTML= (response[id_tweet]['time'])
                         let content = document.getElementById('content'+i)
-                        content.innerHTML= (response[id_tweet]['content'])  
+                        // console.log(response[id_tweet]['content'])
+                        let array_content = response[id_tweet]['content'].split(' ')
+                        array_content.forEach(word => {
+                            content.innerHTML= (response[id_tweet]['content'])   
+                            if(word.startsWith('#')){
+                                // console.log(word)
+                                content.innerHTML = word.anchor("hashtag")
+                            }
+                        });
+                        // console.log(array_content)
                         id_tweet++              
                     }
         }
         }
+
         xhttp.send()
     }
+    let button_like_container = document.getElementById('button_like_container')
+    let button_like = document.getElementById('button_like')
+    let liked = false
+    button_like_container.addEventListener('click', ()=>{
+        if(liked === false){
+            button_like.setAttribute('src', "assets/icon_like.png")
+            liked = true
+        }else{
+            button_like.setAttribute('src', "assets/icon_noLike.png")
+            liked = false
+        }
+    })
 }

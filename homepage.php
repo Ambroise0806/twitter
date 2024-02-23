@@ -78,7 +78,13 @@
                         </div>
                     </div>
                 </div>
-                <div style="display: flex; justify-content: center;">
+                <div>
+                    <button style="width: fit-content;">Add images</button>
+                    <div id="button_like_container" style="width: 100px; height: 100px;">
+                        <img id="button_like" src="assets/icon_noLike.png" alt="button like" style="width: 100px; height: 100px;">
+                    </div>
+                </div>
+                <div id="img_container_0" class="" style="display: flex; justify-content: center;">
                     <img src="assets/image_tweet_test.jpg" alt="Image d'un tweetos">
                 </div>
             </div>
@@ -331,7 +337,7 @@
                     </div>
                 </div>
                 <div style="display: flex; justify-content: center;">
-                    <img src="assets/zoro.png" style="width: 30%;" alt="Image d'un tweetos">
+                    <img  src="assets/zoro.png" style="width: 30%;" alt="Image d'un tweetos">
                 </div>
             </div>
         </div>

@@ -52,7 +52,7 @@ class Database {
 
     public function getTweet(){
         try {
-            $sql = "SELECT username, AtUsername, time, content FROM tweet INNER JOIN user ON tweet.id_user = user.id ORDER BY tweet.id DESC;";
+            $sql = "SELECT username, at_user_name, time, content, profile_picture FROM tweet INNER JOIN user ON tweet.id_user = user.id ORDER BY tweet.id DESC;";
             $statement = $this->getPDO()->prepare($sql);
             $statement->execute();
             $result = $statement->fetchAll();
