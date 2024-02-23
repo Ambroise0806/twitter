@@ -1,9 +1,11 @@
 window.onload = function() {
 
-    let editBtn = document.getElementById("open-btn")
-    let editForm = document.getElementById("popupForm")
+    function openForm() {
+        document.getElementById("popupForm").style.display = "block";
+    }
 
-    editBtn.addEventListener("click", ()=>{
-        editForm.style.display = "block";
-    })
+    function closeForm() {
+        document.getElementById("popupForm").style.display = "none";
+    }
 }
+
