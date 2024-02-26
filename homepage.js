@@ -1,4 +1,4 @@
-window.onload = function () {
+document.addEventListener('DOMContentLoaded', function () {
 
 let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
 let themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
@@ -69,4 +69,5 @@ themeToggleBtn.addEventListener('click', function() {
     
         localStorage.setItem('iconMPActive', this.classList.contains('active'));
     });
-}
+
+});

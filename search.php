@@ -25,13 +25,22 @@
                         </svg>
                     </button>
                 </div>
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M13.8 10.5 20.7 2h-3l-5.3 6.5L7.7 2H1l7.8 11-7.3 9h3l5.7-7 5.1 7H22l-8.2-11.5Zm-2.4 3-1.4-2-5.6-7.9h2.3l4.5 6.3 1.4 2 6 8.5h-2.3l-4.9-7Z"/>
-                </svg>
+                <form>   
+                    <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                    <div class="relative">
+                        <input type="search" id="search" class="block w-full m-2 p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required />
+                        <!-- <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button> -->
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                            </svg>
+                        </div>
+                    </div>
+            </form>
         <div class="flex items-center">
           <div class="flex items-center ms-3">
             <div>
-              <button type="button" class="flex text-sm bg-gray-900 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+              <button type="button" class="flex m-2 text-sm bg-gray-900 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                 <span class="sr-only">Open user menu</span>
                 <img class="w-8 h-8 rounded-full" src="Assets/robin.jpg" alt="user photo">
               </button>
@@ -118,100 +127,14 @@
 </aside>
 </header>
     
+<body>
     <main class="flex flex-col m-2" style="margin-top: 30%; margin-bottom: 20%;">
 
-        <!-- Ajouter un tweet au fil -->
-<form>
-   <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
-       <div class="px-4 py-2 bg-gray-200 rounded-t-lg dark:bg-gray-900">
-           <textarea id="comment" rows="4" class="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-900 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="What is happening !?" required /></textarea>
-       </div>
-           <div class="flex ps-0 space-x-1 rtl:space-x-reverse sm:ps-2">
-               <button type="button" class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-                   <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 20">
-                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M1 6v8a5 5 0 1 0 10 0V4.5a3.5 3.5 0 1 0-7 0V13a2 2 0 0 0 4 0V6"/>
-                    </svg>
-                   <span class="sr-only">Attach file</span>
-               </button>
-               <button type="button" class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-                   <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
-                        <path d="M8 0a7.992 7.992 0 0 0-6.583 12.535 1 1 0 0 0 .12.183l.12.146c.112.145.227.285.326.4l5.245 6.374a1 1 0 0 0 1.545-.003l5.092-6.205c.206-.222.4-.455.578-.7l.127-.155a.934.934 0 0 0 .122-.192A8.001 8.001 0 0 0 8 0Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
-                    </svg>
-                   <span class="sr-only">Set location</span>
-               </button>
-               <button type="button" class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-                   <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                        <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
-                    </svg>
-                   <span class="sr-only">Upload image</span>
-               </button>
-               <div class="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
-           <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
-               Post 
-           </button>
-           </div>
-       </div>
-   </div>
-</form>
 
-        <!-- fil d'actualite -->
-<div class="flex flex-co">
-    <div class="h-auto w-auto p-4 m-4 rounded-lg bg-gray-50 dark:bg-gray-900 dark:text-white">
-        <div class="flex flex-wrap w-auto items-center">
-        <!-- New tweet 1 -->
-        <img src="assets/pp_nav.jpg" class="w-12 h-12 rounded-full" alt="Profil's Icon">
-        <h1 class="flex flex-col font-bold m-2">Username</h1>
-        <svg class="flex w-6 h-6 font-bold text-gray-500 m-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 12h0m6 0h0m6 0h0"/>
-  </svg>
-        <div class="flex flex-col justify">
-            <div class="flex">
-                    <span class="flex align-start ml-0 text-gray-500">@useraccount</span>
-                    <span class="flex align-start ml-3 mb-2 p-2 text-lg text-gray-500 font-bold">.</span>
-                    <span class="flex align-start ml-3 text-gray-500">Feb-22</span>
-                </div>          
-                <div class="w-auto px-auto ml-5 mb-2">
-                    <p>User Content blablabla 1</p>    
-            </div>          
-        </div>
-        <div class="flex justify-center">
-            <img src="assets/image_tweet_test.jpg" class="rounded-lg" alt="Image d'un tweetos">
-        </div>
-    </div>
-</div>
 
-    <!-- New tweet 2 -->
-    
-        <!-- <div style="display: flex; justify-content: center;">
-                <div style="height: fit-content;">
-                    <div style="display: flex; justify-content: center; width: fit-content;">
-                        <img src="assets/pp_nav.jpg" style="width: 7%; height: 25%; border-radius: 100%;"
-                            alt="Icon de profile">
-                        <div style="display: flex; flex-direction: column;">
-                            <div style="display: flex;">
-                                <h1 style="margin: 0px 15px;">Username</h6>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 0px;">@useraccount</span>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 5px;margin-left: 15px; font-size: larger; font-weight: bolder;">.</span>
-                                    <span
-                                        style="align-items: self-start;display: flex;padding-top: 11px;margin-left: 15px;">Feb-19</span>
-                            </div>
-                            <div style="width: fit-content;margin-left: 20px;">
-                                <p>User comment blablablabla</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div style="display: flex; justify-content: center;">
-                    <img src="assets/image_tweet_test.jpg" alt="Image d'un tweetos">
-                </div>
-            </div>
-        </div> -->
     </main>
-    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
-    <footer class="bg-gray-300 rounded-lg shadow m-2 p-4 dark:bg-gray-900">
+<footer class="bg-gray-300 rounded-lg shadow m-2 p-4 dark:bg-gray-900">
         <div class="w-auto mx-auto max-w-screen-xl md:flex md:items-center md:justify-between">
             <!-- icon button, search, message ->redirection vers la page respective -->
             <ul class="flex flex-wrap justify-between font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
