@@ -1,6 +1,7 @@
 <?php
 ob_start();
 session_start();
+
 class Connection {
     private $base;
     private $host = "localhost";
@@ -21,13 +22,13 @@ class Connection {
     function connect($nom, $pseudo, $email, $mdp, $jour, $mois, $annee) {
         $date = "$annee-$mois-$jour";
         if ($nom != "" && $pseudo != "" && $email != "" && $mdp != "" && $date != "") {
-            // $hashed_password = hash('ripemd160', $this->salt . $mdp);
+            $hash = hash('ripemd160', $this->salt . $mdp);
             try {
                 $con = $this->base->prepare("INSERT INTO user (username, at_user_name, profile_picture, banner, mail, password, birthdate) VALUES (:nom, :pseudo,'flemme', 'reflemme', :email, :mdp, :date)");
                 $con->bindParam(':nom', $nom);
                 $con->bindParam(':pseudo', $pseudo);
                 $con->bindParam(':email', $email);
-                $con->bindParam(':mdp', $mdp);
+                $con->bindParam(':mdp', $hash);
                 $con->bindParam(':date', $date);
                 $con->execute();
                 echo "Utilisateur inséré avec succès.";
@@ -53,6 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     );
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
     <head>

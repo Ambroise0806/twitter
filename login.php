@@ -13,8 +13,10 @@ if (!isset($_SESSION['mail'])) {
     <title>Mon compte</title>
 </head>
 <body>
-    <h1>Bienvenue sur votre compte <?php echo $_SESSION['mdp']; ?></h1>
-    <p>Votre adresse e-mail : <?php echo $_SESSION['nom']; ?></p>
+    <h1>Bienvenue sur votre compte <?php echo $_SESSION['nom']; ?></h1>
+    <p>Votre adresse e-mail : <?php echo $_SESSION['mail']; ?></p>
+    <p>Votre pseudo : <?php echo $_SESSION['pseudo']; ?></p>
+    <p>Vous êtes né le : <?php echo $_SESSION['born']; ?></p>
     <a href="connexion.php">Se déconnecter</a>
 </body>
 </html>
