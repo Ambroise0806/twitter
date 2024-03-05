@@ -1,71 +1,80 @@
-window.onload = function () {
-    let button_pp = document.getElementById('button_pp')
-    let nav_section = document.getElementById('nav_section')
-    let hide = true
+document.addEventListener('DOMContentLoaded', function () {
 
-    button_pp.addEventListener('click', ()=>{
-        if(hide){
-            nav_section.style.display="block"
-            hide = false
-        }else{
-            nav_section.style.display="none"
-            hide = true
+    let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    let themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        themeToggleLightIcon.classList.remove('hidden');
+    } else {
+        themeToggleDarkIcon.classList.remove('hidden');
+    }
+
+    let themeToggleBtn = document.getElementById('theme-toggle');
+
+    themeToggleBtn.addEventListener('click', function () {
+
+        themeToggleDarkIcon.classList.toggle('hidden');
+        themeToggleLightIcon.classList.toggle('hidden');
+
+        if (localStorage.getItem('color-theme')) {
+            if (localStorage.getItem('color-theme') === 'light') {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            }
+
+        } else {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
         }
-    })
-
+    });
+    
     let newPost_container = document.getElementById('newPost_container')
     let newPost_button = document.getElementById('newPost_button')
     
     
     function CharTweet(){
-        let errorNewPost = document.getElementById('error_newPost')    
         let tweetContentLength = newPost_container.textLength
         
         if(tweetContentLength == 0){
-            errorNewPost.innerHTML= ""
             newPost_button.classList.add('disabled')
         }else if(tweetContentLength > 140){
-            errorNewPost.innerHTML= "Votre tweet ne peut pas dépasser 140 charactères !"
+            alert("Votre tweet ne peut pas dépasser 140 charactères !")
             newPost_button.classList.add('disabled')
         }else{
-            errorNewPost.innerHTML= ""
             newPost_button.classList.remove('disabled')
         }
     }
     
-    function countCharLength(){
-        let newPost_length = document.getElementById('newPost_length')
-        let newPost_maxLength = document.getElementById('newPost_maxLength')
-        let newPost_containerCount = newPost_container.textLength
+    // function countCharLength(){
+    //     let newPost_length = document.getElementById('newPost_length')
+    //     let newPost_maxLength = document.getElementById('newPost_maxLength')
+    //     let newPost_containerCount = newPost_container.textLength
 
-        newPost_length.innerHTML = ""
-        newPost_length.innerHTML = newPost_containerCount 
-        if(newPost_containerCount > 140)
-        {
-            newPost_maxLength.classList.add('error_newPost')
-            newPost_length.classList.add('error_newPost')
-        }else{
-            newPost_maxLength.classList.remove('error_newPost')
-            newPost_length.classList.remove('error_newPost')
-        }
-    }
+    //     newPost_length.innerHTML = ""
+    //     newPost_length.innerHTML = newPost_containerCount 
+    //     if(newPost_containerCount > 140)
+    //     {
+    //         newPost_maxLength.classList.add('error_newPost')
+    //         newPost_length.classList.add('error_newPost')
+    //     }else{
+    //         newPost_maxLength.classList.remove('error_newPost')
+    //         newPost_length.classList.remove('error_newPost')
+    //     }
+    // }
 
     newPost_button.addEventListener('click', CharTweet);
     newPost_container.addEventListener('keyup', CharTweet)
-    newPost_container.addEventListener('keyup', countCharLength)
-    
-//     let loading_gif = document.getElementById('loading_gif')
+    // newPost_container.addEventListener('keyup', countCharLength)
 
-//     document.addEventListener('scrolldown', (e)=>{
-//         console.log(e)
-//             setTimeout(()=>{
-//                 loading_gif.classList.add('visible') 
-//             }, 30000) 
-//         }
-// )
     loadDoc();
-
-
     let id_tweet = 0;
 
     function loadDoc() {
@@ -83,15 +92,16 @@ window.onload = function () {
                         let date = document.getElementById('date'+i)
                         date.innerHTML= (response[id_tweet]['time'])
                         let content = document.getElementById('content'+i)
+                        content.innerHTML= (response[id_tweet]['content'])
                         // console.log(response[id_tweet]['content'])
-                        let array_content = response[id_tweet]['content'].split(' ')
-                        array_content.forEach(word => {
-                            content.innerHTML= (response[id_tweet]['content'])   
-                            if(word.startsWith('#')){
-                                // console.log(word)
-                                content.innerHTML = word.anchor("hashtag")
-                            }
-                        });
+                        // let array_content = response[id_tweet]['content'].split(' ')
+                        // array_content.forEach(word => {
+                        //     content.innerHTML= (response[id_tweet]['content'])   
+                        //     if(word.startsWith('#')){
+                        //         // console.log(word)
+                        //         content.innerHTML = word.anchor("hashtag")
+                        //     }
+                        // });
                         // console.log(array_content)
                         id_tweet++              
                     }
@@ -100,16 +110,4 @@ window.onload = function () {
 
         xhttp.send()
     }
-    let button_like_container = document.getElementById('button_like_container')
-    let button_like = document.getElementById('button_like')
-    let liked = false
-    button_like_container.addEventListener('click', ()=>{
-        if(liked === false){
-            button_like.setAttribute('src', "assets/icon_like.png")
-            liked = true
-        }else{
-            button_like.setAttribute('src', "assets/icon_noLike.png")
-            liked = false
-        }
-    })
-}
+});
