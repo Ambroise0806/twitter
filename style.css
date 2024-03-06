@@ -22,3 +22,36 @@
 .hidden{
     display: none !important;
 }
+
+.error_css_input {
+    border: 2px solid red;
+}
+
+#Username{
+    outline: none;
+}
+#newEmail {
+    outline: none;
+}
+.blue {
+    border: 2px solid blue;
+}
+.remove {
+    border: none;
+}
+
+#jour_naissance {
+    outline: none;
+}
+#mois_naissance {
+    outline: none;
+}
+#annee_naissance {
+    outline: none;
+}
+#newPassword {
+    outline: none;
+}
+#accountName {
+    outline: none;
+}

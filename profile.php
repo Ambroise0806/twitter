@@ -1,3 +1,13 @@
+<?php
+session_start();
+if(isset($_SESSION['email'])){
+    $mail_user = $_SESSION['email'];
+    print_r($mail_user);
+}else{
+    var_dump("testeeeee*");
+
+}
+?>
 <!DOCTYPE html>
 <html lang="en" class="dark">
 

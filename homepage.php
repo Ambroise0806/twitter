@@ -185,7 +185,7 @@
             </div>          
         </div>
         <div class="flex justify-center">
-            <img src="assets/image_tweet_test.jpg" class="rounded-lg" alt="Image d'un tweetos">
+            <!-- <img src="" class="rounded-lg" alt="Image d'un tweetos"> -->
         </div>
         
         <div class="w-auto mx-auto max-w-screen-xl md:flex md:items-center md:justify-between">
@@ -255,7 +255,7 @@
             </div>          
         </div>
         <div class="flex justify-center">
-            <img src="assets/image_tweet_test.jpg" class="rounded-lg" alt="Image d'un tweetos">
+            <!-- <img src="" class="rounded-lg" alt="Image d'un tweetos"> -->
         </div>
         
         <div class="w-auto mx-auto max-w-screen-xl md:flex md:items-center md:justify-between">
@@ -324,7 +324,7 @@
             </div>          
         </div>
         <div class="flex justify-center">
-            <img src="assets/image_tweet_test.jpg" class="rounded-lg" alt="Image d'un tweetos">
+            <!-- <img src="" class="rounded-lg" alt="Image d'un tweetos"> -->
         </div>
         
         <div class="w-auto mx-auto max-w-screen-xl md:flex md:items-center md:justify-between">
@@ -393,7 +393,7 @@
             </div>          
         </div>
         <div class="flex justify-center">
-            <img src="assets/image_tweet_test.jpg" class="rounded-lg" alt="Image d'un tweetos">
+            <!-- <img src="" class="rounded-lg" alt="Image d'un tweetos"> -->
         </div>
         
         <div class="w-auto mx-auto max-w-screen-xl md:flex md:items-center md:justify-between">
@@ -462,7 +462,7 @@
             </div>          
         </div>
         <div class="flex justify-center">
-            <img src="assets/image_tweet_test.jpg" class="rounded-lg" alt="Image d'un tweetos">
+            <!-- <img src="" class="rounded-lg" alt="Image d'un tweetos"> -->
         </div>
         
         <div class="w-auto mx-auto max-w-screen-xl md:flex md:items-center md:justify-between">
@@ -531,7 +531,7 @@
             </div>          
         </div>
         <div class="flex justify-center">
-            <img src="assets/image_tweet_test.jpg" class="rounded-lg" alt="Image d'un tweetos">
+            <!-- <img src="" class="rounded-lg" alt="Image d'un tweetos"> -->
         </div>
         
         <div class="w-auto mx-auto max-w-screen-xl md:flex md:items-center md:justify-between">
@@ -600,7 +600,7 @@
             </div>          
         </div>
         <div class="flex justify-center">
-            <img src="assets/image_tweet_test.jpg" class="rounded-lg" alt="Image d'un tweetos">
+            <!-- <img src="" class="rounded-lg" alt="Image d'un tweetos"> -->
         </div>
         
         <div class="w-auto mx-auto max-w-screen-xl md:flex md:items-center md:justify-between">
@@ -669,7 +669,7 @@
             </div>          
         </div>
         <div class="flex justify-center">
-            <img src="assets/image_tweet_test.jpg" class="rounded-lg" alt="Image d'un tweetos">
+            <!-- <img src="" class="rounded-lg" alt="Image d'un tweetos"> -->
         </div>
         
         <div class="w-auto mx-auto max-w-screen-xl md:flex md:items-center md:justify-between">
@@ -738,7 +738,7 @@
             </div>          
         </div>
         <div class="flex justify-center">
-            <img src="assets/image_tweet_test.jpg" class="rounded-lg" alt="Image d'un tweetos">
+            <!-- <img src="" class="rounded-lg" alt="Image d'un tweetos"> -->
         </div>
         
         <div class="w-auto mx-auto max-w-screen-xl md:flex md:items-center md:justify-between">
@@ -807,7 +807,7 @@
             </div>          
         </div>
         <div class="flex justify-center">
-            <img src="assets/image_tweet_test.jpg" class="rounded-lg" alt="Image d'un tweetos">
+            <!-- <img src="" class="rounded-lg" alt="Image d'un tweetos"> -->
         </div>
         
         <div class="w-auto mx-auto max-w-screen-xl md:flex md:items-center md:justify-between">
@@ -919,42 +919,14 @@
         </div>
     </div>
 </div>
-
-    <!-- <footer class="bg-gray-300 rounded-lg shadow m-2 p-4 dark:bg-gray-900">
-        <div class="w-auto mx-auto max-w-screen-xl md:flex md:items-center md:justify-between">
-            <!-- icon button, search, message ->redirection vers la page respective -->
-            <!-- <ul class="flex flex-wrap justify-between font-medium text-gray-500 dark:text-gray-400 sm:mt-0"> -->
-                <!-- <ul class="flex font-medium text-white m-2 dark:text-white sm:mt-0"> -->
-                    <!-- <li>
-                        <a href="/home.php" class="text-gray-900 hover:bg-gray-100 dark:text-white">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white" id="iconHome" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m4 12 8-8 8 8M6 10.5V19c0 .6.4 1 1 1h3v-3c0-.6.4-1 1-1h2c.6 0 1 .4 1 1v3h3c.6 0 1-.4 1-1v-8.5"/>
-                        </svg>
-                    </li>
-                 <li>
-                        <a href="search.php" class="text-gray-900 hover:bg-gray-100 dark:text-white">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white" id="iconSearch" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
-                        </svg>                    
-                </li>
-                    <li>
-                        <a href="#" class="text-gray-900 hover:bg-gray-100 dark:text-white"></a>
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white" id="iconMP" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m3.5 5.5 7.9 6c.4.3.8.3 1.2 0l7.9-6M4 19h16c.6 0 1-.4 1-1V6c0-.6-.4-1-1-1H4a1 1 0 0 0-1 1v12c0 .6.4 1 1 1Z"/>
-                        </svg>                    
-                    </li>
-                </ul>
-            </div>
-    </footer>  -->
 </body>
 </html>
 <?php
-    include('addTweet.php');
+    include('tweet.php');
 
     $newTweet = $_POST['newTweet'];
 
-    $db = new Database('twitter');
+    $db = new Tweet('twitter');
     $db->addNewTweet(1, $newTweet);
     $db->getTweet();
-    $db->getHashtag($newTweet);
 ?>

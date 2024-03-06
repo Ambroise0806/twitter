@@ -35,28 +35,28 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
-    
+
     let newPost_container = document.getElementById('newPost_container')
     let newPost_button = document.getElementById('newPost_button')
-    
-    
-    function CharTweet(){
+
+
+    function CharTweet() {
         let tweetContentLength = newPost_container.textLength
-        
-        if(tweetContentLength == 0){
+
+        if (tweetContentLength == 0) {
             newPost_button.classList.add('disabled')
-        }else if(tweetContentLength > 140){
+        } else if (tweetContentLength > 140) {
             alert("Votre tweet ne peut pas dépasser 140 charactères !")
             newPost_button.classList.add('disabled')
-        }else{
+        } else {
             newPost_button.classList.remove('disabled')
         }
     }
-    
+
     // function countCharLength(){
     //     let newPost_length = document.getElementById('newPost_length')
     //     let newPost_maxLength = document.getElementById('newPost_maxLength')
-    //     let newPost_containerCount = newPost_container.textLength
+        // let newPost_containerCount = newPost_container.textLength
 
     //     newPost_length.innerHTML = ""
     //     newPost_length.innerHTML = newPost_containerCount 
@@ -80,34 +80,35 @@ document.addEventListener('DOMContentLoaded', function () {
     function loadDoc() {
         const xhttp = new XMLHttpRequest()
         xhttp.open("GET", "tweet.json")
-        xhttp.onreadystatechange = function() {
+        xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                // console.log(this.responseText)
                 let response = JSON.parse(this.responseText);
-                    for(let i=0; i<10; i++){
-                        let username = document.getElementById('username'+ i)
-                        username.innerHTML= (response[id_tweet]['username'])
-                        let atUsername = document.getElementById('atUsername'+i)
-                        atUsername.innerHTML= (response[id_tweet]['at_user_name'])
-                        let date = document.getElementById('date'+i)
-                        date.innerHTML= (response[id_tweet]['time'])
-                        let content = document.getElementById('content'+i)
-                        content.innerHTML= (response[id_tweet]['content'])
-                        // console.log(response[id_tweet]['content'])
-                        // let array_content = response[id_tweet]['content'].split(' ')
-                        // array_content.forEach(word => {
-                        //     content.innerHTML= (response[id_tweet]['content'])   
-                        //     if(word.startsWith('#')){
-                        //         // console.log(word)
-                        //         content.innerHTML = word.anchor("hashtag")
-                        //     }
-                        // });
-                        // console.log(array_content)
-                        id_tweet++              
-                    }
+                for (let i = 0; i < 10; i++) {
+                    let username = document.getElementById('username' + i)
+                    username.innerHTML = (response[id_tweet]['username'])
+                    let atUsername = document.getElementById('atUsername' + i)
+                    atUsername.innerHTML = (response[id_tweet]['at_user_name'])
+                    let date = document.getElementById('date' + i)
+                    date.innerHTML = (response[id_tweet]['time'])
+                    let content = document.getElementById('content' + i)
+                    let content_response = response[id_tweet]['content']
+                    content_response = content_response.replace(/\@(.*?)(\s|$)/g, '@');
+                    // let array_content = response[id_tweet]['content'].split(' ')
+                    // let word_pos = 0
+                    // let anchor_str = ""
+                    // array_content.forEach(word => {
+                    //     if(word.startsWith('#')){
+                    //         word_pos = array_content.indexOf(word)
+                    //         anchor_str = "<a href=\"#\">"+word+"</a>"
+                    //         array_content.set(word_pos, anchor_str);
+                    //     }
+                    // });
+                    console.log(content_response)
+                    content.innerHTML = (response[id_tweet]['content'])
+                    id_tweet++
+                }
+            }
         }
-        }
-
         xhttp.send()
     }
 });
