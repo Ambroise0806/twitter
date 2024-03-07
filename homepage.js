@@ -70,36 +70,23 @@ document.addEventListener('DOMContentLoaded', function () {
     //     }
     // }
     
-
-    function load_atUsername (){
-        const xhttp = new XMLHttpRequest()
-        xhttp.open("GET", "at_username.json")
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                let response = JSON.parse(this.responseText);
-                response.forEach(element => {
-                    console.log(element[0])
-                });
-            }
-        }
-        xhttp.send()
-    }
-
-    autocompletion();
-    function autocompletion(){
-        newPost_container.addEventListener('keyup', ()=>{
-            load_atUsername()
-            
-        })
-    }
-    
     newPost_button.addEventListener('click', CharTweet);
     newPost_container.addEventListener('keyup', CharTweet)
     // newPost_container.addEventListener('keyup', countCharLength)
     
     load_tweet();
     let id_tweet = 0;
-    
+
+    // $.ajax({
+
+    //     url: 'tweet.php',
+    //     method: 'POST',
+    //     data: {
+    //         userId: ''
+    //     }
+
+    // })
+
     function load_tweet() {
         const xhttp = new XMLHttpRequest()
         xhttp.open("GET", "tweet.json")
