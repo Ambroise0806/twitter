@@ -57,12 +57,43 @@ class Tweet
     public function getTweet()
     {
         try {
-            $sql = "SELECT username, at_user_name, time, content, profile_picture FROM tweet INNER JOIN user ON tweet.id_user = user.id ORDER BY tweet.id DESC;";
+            $sql = "SELECT username, at_user_name, time, content, profile_picture FROM tweet INNER JOIN user ON tweet.id_user = user.id ORDER BY tweet.id DESC LIMIT 10;";
             $statement = $this->getPDO()->prepare($sql);
             $statement->execute();
             $result = $statement->fetchAll();
             if (!empty($result)) {
                 $filename = "tweet.json";
+                $data = json_encode($result);
+                if (is_writable($filename)) {
+                    if (!$stream = fopen($filename, 'w+')) {
+                        throw new InvalidArgumentException("Impossible d'ouvrir le fichier ($filename)");
+                    }
+                    if (fwrite($stream, $data) === FALSE) {
+                        throw new InvalidArgumentException("Impossible d'écrire dans le fichier ($filename)");
+                    }
+                    fclose($stream);
+                    throw new InvalidArgumentException("L'écriture dans le fichier ($filename) a réussi");
+
+                } else {
+                    throw new InvalidArgumentException("Le fichier $filename n'est pas accessible en écriture.");
+                }
+            } else {
+                throw new InvalidArgumentException("le tableau est vide !");
+            }
+        } catch (PDOException $e) {
+            throw new InvalidArgumentException("Query error: " . $e->getMessage());
+        }
+    }
+
+    public function getAtUsername()
+    {
+        try {
+            $sql = "SELECT at_user_name FROM user ORDER BY at_user_name ASC;";
+            $statement = $this->getPDO()->prepare($sql);
+            $statement->execute();
+            $result = $statement->fetchAll();
+            if (!empty($result)) {
+                $filename = "at_username.json";
                 $data = json_encode($result);
                 if (is_writable($filename)) {
                     if (!$stream = fopen($filename, 'w+')) {

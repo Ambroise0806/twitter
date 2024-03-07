@@ -1,13 +1,3 @@
-<?php
-session_start();
-if(isset($_SESSION['email'])){
-    $mail_user = $_SESSION['email'];
-    print_r($mail_user);
-}else{
-    var_dump("testeeeee*");
-
-}
-?>
 <!DOCTYPE html>
 <html lang="en" class="dark">
 
@@ -17,8 +7,7 @@ if(isset($_SESSION['email'])){
     <link rel="stylesheet" href="./output.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"  rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet"/>
-    <!-- <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"> -->
-    <script src="homepage.js"></script>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <title>Twitter</title>
 </head>

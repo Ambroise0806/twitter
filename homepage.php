@@ -927,6 +927,8 @@
     $newTweet = $_POST['newTweet'];
 
     $db = new Tweet('twitter');
+    $db->getAtUsername();
     $db->addNewTweet(1, $newTweet);
     $db->getTweet();
+    
 ?>
