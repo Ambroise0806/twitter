@@ -17,48 +17,53 @@ document.addEventListener('DOMContentLoaded', function () {
     load_atUsername();
 
     function autocompletion(field, values) {
-        let a_exist = false
-        field.addEventListener('input', (e) => {
-            let val = field.value
-            if(a_exist === false){
-                let a = document.createElement("DIV")
-                a.setAttribute("id", field.id + "autocomplete-list")
-                a.setAttribute("class", "autocomplete-items")
-                field.parentNode.appendChild(a)
-                for (i = 0; i < values.length; i++) {
-                    if (values[i].substr(0, val.length).toLowerCase() == val.toLowerCase()) {
-                        let b = document.createElement("DIV")
-                        b.innerHTML = "<strong>" + values[i].substr(0, val.length) + "</strong>"
-                        b.innerHTML += values[i].substr(val.length)
-                        b.innerHTML += "<input type='hidden' value='" + values[i] + "'>"
-                        b.addEventListener("click", function (e) {
-                            field.value = this.getElementsByTagName("input")[0].value
-                            closeAllLists()
-                        });
-                        a.appendChild(b)
+        field.addEventListener('input', () => {
+            let regexAt = /\@(.*?)(\s|$)/g 
+            let val = field.value.match(regexAt)
+            if(val != undefined && val != null){
+                val.forEach(element => {
+                    element = element.substr(1)
+                    if (document.getElementById('newPost_containerautocomplete-list') != null) {
+                        document.getElementById('newPost_containerautocomplete-list').remove()
+                        let a = document.createElement("DIV")
+                        a.setAttribute("id", field.id + "autocomplete-list")
+                        a.setAttribute("class", "autocomplete-items")
+                        field.parentNode.appendChild(a)
+                        for (i = 0; i < values.length; i++) {
+                                if (values[i].substr(0, element.length).toLowerCase() == element.toLowerCase()) {
+                                    let b = document.createElement("DIV")
+                                    b.innerHTML = "<strong>" + values[i].substr(0, element.length) + "</strong>"
+                                    b.innerHTML += values[i].substr(element.length)
+                                    b.innerHTML += "<input type='hidden' value='" + values[i] + "'>"
+                                    b.addEventListener("click", function () {
+                                        let previous_text_length = field.value.length - element.length
+                                        field.value = field.value.substr(0, previous_text_length) + this.getElementsByTagName("input")[0].value
+                                        closeAllLists()
+                                    });
+                                    a.appendChild(b)
+                                }
+                            }
+                    } else {
+                        let a = document.createElement("DIV")
+                        a.setAttribute("id", field.id + "autocomplete-list")
+                        a.setAttribute("class", "autocomplete-items")
+                        field.parentNode.appendChild(a)
+                        for (i = 0; i < values.length; i++) {
+                                if (values[i].substr(0, element.length).toLowerCase() == element.toLowerCase()) {
+                                    let b = document.createElement("DIV")
+                                    b.innerHTML = "<strong>" + values[i].substr(0, element.length) + "</strong>"
+                                    b.innerHTML += values[i].substr(element.length)
+                                    b.innerHTML += "<input type='hidden' value='" + values[i] + "'>"
+                                    b.addEventListener("click", function () {
+                                        let previous_text_length = field.value.length - element.length
+                                        field.value = field.value.substr(0, previous_text_length) + this.getElementsByTagName("input")[0].value
+                                        closeAllLists()
+                                    });
+                                    a.appendChild(b)
+                            }
+                        }
                     }
-                }
-                a_exist = true
-                return a_exist;
-            }else{
-                document.getElementById('newPost_containerautocomplete-list').remove()
-                let a = document.createElement("DIV")
-                a.setAttribute("id", field.id + "autocomplete-list")
-                a.setAttribute("class", "autocomplete-items")
-                field.parentNode.appendChild(a)
-                for (i = 0; i < values.length; i++) {
-                    if (values[i].substr(0, val.length).toLowerCase() == val.toLowerCase()) {
-                        let b = document.createElement("DIV")
-                        b.innerHTML = "<strong>" + values[i].substr(0, val.length) + "</strong>"
-                        b.innerHTML += values[i].substr(val.length)
-                        b.innerHTML += "<input type='hidden' value='" + values[i] + "'>"
-                        b.addEventListener("click", function (e) {
-                            field.value = this.getElementsByTagName("input")[0].value
-                            closeAllLists()
-                        });
-                        a.appendChild(b)
-                    }
-                }
+                });
             }
         });
         function closeAllLists() {
@@ -67,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 x[i].parentNode.removeChild(x[i]);
             }
         }
+        return
     }
 
     let newPost_container = this.getElementById('newPost_container')
