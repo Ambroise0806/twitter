@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         a.setAttribute("id", field.id + "autocomplete-list")
                         a.setAttribute("class", "autocomplete-items")
                         field.parentNode.appendChild(a)
+                        //PENSER A RETIRER "newPost_containerautocomplete-list" QUAND ON SUPPRIME LE @
                         for (i = 0; i < values.length; i++) {
                                 if (values[i].substr(0, element.length).toLowerCase() == element.toLowerCase()) {
                                     let b = document.createElement("DIV")

@@ -11,6 +11,7 @@
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="homepage.js"></script>
+    <script src="light_mode.js"></script>
     <script src="autocompletion.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <title>Twitter</title>
@@ -935,5 +936,6 @@
     $db->addNewTweet(1, $newTweet);
     $db->getTweet();
     $db->getAtUsername();
-    
+    $db->addHashtag_list();
+
 ?>

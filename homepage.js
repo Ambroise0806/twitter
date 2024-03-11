@@ -1,41 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-
-    let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-    let themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        themeToggleLightIcon.classList.remove('hidden');
-    } else {
-        themeToggleDarkIcon.classList.remove('hidden');
-    }
-
-    let themeToggleBtn = document.getElementById('theme-toggle');
-
-    themeToggleBtn.addEventListener('click', function () {
-
-        themeToggleDarkIcon.classList.toggle('hidden');
-        themeToggleLightIcon.classList.toggle('hidden');
-
-        if (localStorage.getItem('color-theme')) {
-            if (localStorage.getItem('color-theme') === 'light') {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('color-theme', 'dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('color-theme', 'light');
-            }
-
-        } else {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('color-theme', 'light');
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('color-theme', 'dark');
-            }
-        }
-    });
-
     let newPost_container = document.getElementById('newPost_container')
     let newPost_button = document.getElementById('newPost_button')
 
@@ -52,40 +15,15 @@ document.addEventListener('DOMContentLoaded', function () {
             newPost_button.classList.remove('disabled')
         }
     }
+    if(newPost_button != null){
+        newPost_button.addEventListener('click', CharTweet);
+    }
+    if(newPost_container != null){
+        newPost_container.addEventListener('keyup', CharTweet)
+    }
 
-    // function countCharLength(){
-    //     let newPost_length = document.getElementById('newPost_length')
-    //     let newPost_maxLength = document.getElementById('newPost_maxLength')
-        // let newPost_containerCount = newPost_container.textLength
-
-    //     newPost_length.innerHTML = ""
-    //     newPost_length.innerHTML = newPost_containerCount 
-    //     if(newPost_containerCount > 140)
-    //     {
-    //         newPost_maxLength.classList.add('error_newPost')
-    //         newPost_length.classList.add('error_newPost')
-    //     }else{
-    //         newPost_maxLength.classList.remove('error_newPost')
-    //         newPost_length.classList.remove('error_newPost')
-    //     }
-    // }
-    
-    newPost_button.addEventListener('click', CharTweet);
-    newPost_container.addEventListener('keyup', CharTweet)
-    // newPost_container.addEventListener('keyup', countCharLength)
-    
     load_tweet();
     let id_tweet = 0;
-
-    // $.ajax({
-
-    //     url: 'tweet.php',
-    //     method: 'POST',
-    //     data: {
-    //         userId: ''
-    //     }
-
-    // })
 
     function load_tweet() {
         const xhttp = new XMLHttpRequest()
@@ -104,16 +42,23 @@ document.addEventListener('DOMContentLoaded', function () {
                     let content_response = response[id_tweet]['content']
                     let regexHashtag = /\#(.*?)(\s|$)/g 
                     let array_hashtag = content_response.match(regexHashtag)
+                    content.innerHTML = ""
                     if(array_hashtag !== null){
                         array_hashtag.forEach(hashtag => {
-                            content_response = content_response.replace(hashtag, '<a href="#" style="color: skyblue">'+hashtag+'</a> ');
+                            const params = new URLSearchParams({
+                                hashtag: hashtag,
+                            })
+                            content_response = content_response.replace(hashtag, '<a href="search.php?'+params+'" id="hashtag_link" style="color: skyblue">'+hashtag+'</a> ');
                         });
                     }
                     let regexAt = /\@(.*?)(\s|$)/g 
                     let array_at = content_response.match(regexAt)
                     if(array_at !== null){
                         array_at.forEach(at => {
-                            content_response = content_response.replace(at, '<a href="#" style="color: skyblue">'+at+'</a> ');
+                            const params = new URLSearchParams({
+                                at: at,
+                            })
+                            content_response = content_response.replace(at, '<a href="profile.php?'+params+'" id="at_username_link" style="color: skyblue">'+at+'</a> ');
                         });
                     }
                     content.innerHTML = content_response
