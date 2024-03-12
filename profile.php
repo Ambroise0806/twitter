@@ -1,3 +1,6 @@
+<?php   
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en" class="dark">
 
@@ -132,7 +135,7 @@
     <button type="button" class="w-16 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  text-center dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-white dark:focus:ring-blue-800">Edit Profile</button>
     </div>
     <div class="text-gray-900 font-bold text-lg dark:text-white">
-        Lastname Firstname
+    <?php print_r($_SESSION); ?>
     </div>
     <div class="text-gray-600 dark:text-gray-500">
         @username

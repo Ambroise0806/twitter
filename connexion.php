@@ -37,6 +37,8 @@ class Connexion
         $date = "$annee-$mois-$jour";
         if ($nom != "" && $pseudo != "" && $email != "" && $mdp != "" && $date != "") {
             $hash = hash('ripemd160', $this->salt . $mdp);
+            $pp = "flemme";
+            $banner = "reflemme";
             try {
                 $con = $this->getPDO()->prepare("INSERT INTO user (username, at_user_name, profile_picture, banner, mail, password, birthdate) VALUES (:nom, :pseudo,'flemme', 'reflemme', :email, :mdp, :date)");
                 $con->bindParam(':nom', $nom);
@@ -46,7 +48,13 @@ class Connexion
                 $con->bindParam(':date', $date);
                 $con->execute();
                 session_start();
-                $_SESSION['email'] = $email;
+                $_SESSION['username'] = $nom;
+                $_SESSION['at_user_name'] = $pseudo;
+                $_SESSION['profile_picture'] = $pp;
+                $_SESSION['banner'] = $banner;
+                $_SESSION['mail'] = $email;
+                $_SESSION['password'] = $hash;
+                $_SESSION['birthdate'] = $date;
                 header("Location: profile.php");
             } catch (Exception $e) {
                 echo "Erreur lors de l'insertion de l'utilisateur : " . $e->getMessage();
@@ -65,8 +73,14 @@ class Connexion
                 if ($user) {
                     if ($hash === $user['password']) {
                         session_start();
-                        $_SESSION['userId'] = $userId;
-                        header("Location: login.php");
+                        // $_SESSION['username'] = $nom;
+                        // $_SESSION['at_user_name'] = $pseudo;
+                        // $_SESSION['profile_picture'] = $pp;
+                        // $_SESSION['banner'] = $banner;
+                        // $_SESSION['mail'] = $email;
+                        // $_SESSION['password'] = $hash;
+                        // $_SESSION['birthdate'] = $date;
+                        header("Location: profile.php");
                         exit();
                     } else {
                         echo 'Mot de passe incorrect.';

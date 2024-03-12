@@ -1,7 +1,7 @@
 <?php
-
-class addTweet
+class getTweet
 {
+
     private $db_host;
     private $db_user;
     private $db_pass;
@@ -15,7 +15,6 @@ class addTweet
         $this->db_user = $db_user;
         $this->db_pass = $db_pass;
     }
-
     private function getPDO()
     {
         if ($this->pdo === NULL) {
@@ -30,24 +29,19 @@ class addTweet
         }
         return $this->pdo;
     }
-    private function verifyTweetLength($content)
+    public function getTweet()
     {
-        return mb_strlen($content, 'utf8') <= 140;
-    }
-    public function addNewTweet($userId, $content)
-    {
-        if (!$this->verifyTweetLength($content)) {
-            throw new InvalidArgumentException("Votre tweet ne peut pas dépasser 140 charactères !");
-        }
-
         try {
-            $sql = "INSERT INTO tweet (id_user, content) VALUES (:id_user, :content)";
+            $sql = "SELECT tweet.id, username, at_user_name, time, content, profile_picture FROM tweet INNER JOIN user ON tweet.id_user = user.id ORDER BY tweet.id DESC;";
             $statement = $this->getPDO()->prepare($sql);
-            $statement->bindParam(':id_user', $userId);
-            $statement->bindParam(':content', $content);
             $statement->execute();
+            $result = $statement->fetchAll();
+            echo json_encode($result);
         } catch (PDOException $e) {
             throw new InvalidArgumentException("Query error: " . $e->getMessage());
         }
     }
 }
+
+$exec = new getTweet('twitter');
+$exec->getTweet();
