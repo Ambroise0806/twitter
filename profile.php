@@ -1,16 +1,17 @@
 <?php
+echo 'toto';
 session_start();
 if(isset($_SESSION['email']) && isset($_SESSION['userId'])){
     $mail_user = $_SESSION['email'];
     print_r($mail_user);
     $stmt = $pdo->query("SELECT banner, profile_picture, private, username, atursername, city, birthdate FROM user WHERE email LIKE '$mail_user'");
-                  foreach ($conn->query($stmt) as $row) {
+                foreach ($conn->query($stmt) as $row) {
                     echo $row['banner'] . "\n";
                     echo $row['profile_picture'] . $row['private'] . "\n";
                     echo $row['username'] . "\n";
                     echo $row['atusername'] . "\n";
                     echo $row['city'] . $row['birthdate'] . "\n";
-                  }
+                }
     $stmt = $pdo->query("SELECT COUNT(*) FROM follow WHERE id_user LIKE id_follow");
     $stmt = $pdo->query("SELECT COUNT(*) FROM follow WHERE id_follow LIKE id_user");
 }else{
