@@ -1,14 +1,36 @@
+<?php 
+//Inscription, données envoyés au serveur//
+include("connexion.php");
+$nom = $_POST['Username'];
+$pseudo = $_POST['accountName'];
+$email = $_POST['email'];
+$password = $_POST['password'];
+$mois = $_POST['mois_naissance'];
+$jour = $_POST['jour_naissance']; 
+$annee = $_POST['annee_naissance'];
+
+$con = new Connexion('twitter');
+$con->register($nom, $pseudo, $email, $password, $jour, $mois, $annee);
+
+//Connexion//
+
+$con->logIn($email,$password);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" class="dark">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./output.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"  rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet"/>
-    <!-- <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"> -->
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <script src="home.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="home_jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <title>Twitter</title>
 </head>
@@ -50,53 +72,53 @@
                     </div>
                     <!-- Modal body -->
                     <div class="p-4 md:p-5">
-                        <form class="space-y-4" method="" action="#">
+                        <form class="space-y-4" method="POST" action="">
                             <div>
                                 <label for="Username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-                                <input for="Username" name="Username" id="Username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Lenny" required />
+                                <input for="Username" name="Username" id="Username" class="bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Lenny" required />
                             </div>
                             <div>
-                                <label for="lastname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Account's name</label>
-                                <input type="accountName" name="accountName" id="accountName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="@LennyK" required />
-                            </div>
+                                <label for="accountName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Account's name</label>
+                                <input type="accountName" name="accountName" id="accountName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="@LennyK" required />
+                            </div> 
                             <div>
                                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                                <input type="email" name="email" id="newEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" required />
+                                <input type="email" name="email" id="newEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" required />
                             </div>
                             <div>
                                 <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-                                <input type="password" name="password" id="newPassword" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                <input type="password" name="password" id="newPassword" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white" required />
                             </div>
 
             <div class="row">
-            <label for="date_naissance" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your birthdate</label>
+            <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your birthdate</label>
             </div>
             <div>
                 <label for="mois_naissance" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Month</label>
-                    <select name="mois_naissance" id="mois_naissance" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
-                        <option value="mois" name="mois_naissance" id="mois_naissance">January</option>
-                        <option value="mois" name="mois_naissance" id="mois_naissance">February</option>
-                        <option value="mois" name="mois_naissance" id="mois_naissance">March</option>
-                        <option value="mois" name="mois_naissance" id="mois_naissance">April</option>
-                        <option value="mois" name="mois_naissance" id="mois_naissance">May</option>
-                        <option value="mois" name="mois_naissance" id="mois_naissance">June</option>
-                        <option value="mois" name="mois_naissance" id="mois_naissance">July</option>
-                        <option value="mois" name="mois_naissance" id="mois_naissance">August</option>
-                        <option value="mois" name="mois_naissance" id="mois_naissance">September</option>
-                        <option value="mois" name="mois_naissance" id="mois_naissance">October</option>
-                        <option value="mois" name="mois_naissance" id="mois_naissance">November</option>
-                        <option value="mois" name="mois_naissance" id="mois_naissance">December</option>
+                    <select name="mois_naissance" id="mois_naissance" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white">
+                        <option value="01" name="mois_naissance" id="mois_naissance">January</option>
+                        <option value="02" name="mois_naissance" id="mois_naissance">February</option>
+                        <option value="03" name="mois_naissance" id="mois_naissance">March</option>
+                        <option value="04" name="mois_naissance" id="mois_naissance">April</option>
+                        <option value="05" name="mois_naissance" id="mois_naissance">May</option>
+                        <option value="06" name="mois_naissance" id="mois_naissance">June</option>
+                        <option value="07" name="mois_naissance" id="mois_naissance">July</option>
+                        <option value="08" name="mois_naissance" id="mois_naissance">August</option>
+                        <option value="09" name="mois_naissance" id="mois_naissance">September</option>
+                        <option value="10" name="mois_naissance" id="mois_naissance">October</option>
+                        <option value="11" name="mois_naissance" id="mois_naissance">November</option>
+                        <option value="12" name="mois_naissance" id="mois_naissance">December</option>
                     </select>
                 </label>
                 <!-- </div> -->
                 <label for="jour_naissance" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Day</label>
-                    <select name="jour_naissance" id="jour_naissance" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                    <select name="jour_naissance" id="jour_naissance" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white">
                     </select>
                 </label>
                 <!-- </div> -->
                 <!-- <div> -->
                 <label for="annee_naissance" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Year</label>
-                    <select name="annee_naissance" id="annee_naissance" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                    <select name="annee_naissance" id="annee_naissance" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white">
                     </select>
                 </div>
                             <div class="flex justify-between">
@@ -108,7 +130,6 @@
                 </div>
             </div>
         </div>
-     
             <!-- <button type="button" class="h-auto w-auto text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm me-2 mb-2 px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 ">
                 <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 19">
                 <path fill-rule="evenodd" d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z" clip-rule="evenodd"/>
@@ -177,14 +198,14 @@
                     </div>
                     <!-- Modal body -->
                     <div class="p-4 md:p-5">
-                        <form class="space-y-4" method="" action="#">
+                        <form class="space-y-4" method="POST" action="">
                             <div>
                                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                                <input type="email" name="email" id="loginEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" required />
+                                <input type="email" name="email" id="loginEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" required />
                             </div>
                             <div>
                                 <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-                                <input type="password" name="password" id="loginPassword" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                <input type="password" name="password" id="loginPassword" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white" required />
                             </div>
                             <div class="flex justify-between">
                                 <div class="flex items-start">
@@ -195,7 +216,8 @@
                                 </div>
                                 <a href="#" class="text-sm text-blue-700 hover:underline dark:text-blue-500">Lost Password?</a>
                             </div>
-                            <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login to your account</button>
+                            <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                Login to your account</button>
                             <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
                                 Not registered? <a href="#" class="text-blue-700 hover:underline dark:text-blue-500">Create account</a>
                             </div>
@@ -214,65 +236,4 @@
 </section>
 </main>
 </body>
-
-
-<!-- 
-ob_start();
-session_start();
-
-class Connection {
-    private $base;
-    private $host = "localhost";
-    private $dbName = "twitterForAll";
-    private $user = "ambroise";
-    private $password = "youhou";
-    private $salt = "vive le projet tweet_academy";
-
-    public function __construct() {
-        try {
-            $this->base = new PDO("mysql:host=$this->host;dbname=$this->dbName", $this->user, $this->password);
-            $this->base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (Exception $e) {
-            echo "" . $e->getMessage();
-        }
-    }
-
-    function connect($email, $mdp) {
-        if ($email != "" && $mdp != "") {
-            try {
-                $con = $this->base->prepare("SELECT * FROM user WHERE mail = :email");
-                $hash = hash('ripemd160', $this->salt . $mdp);
-                $con->bindParam(':email', $email);
-                $con->execute();
-                $user = $con->fetch(PDO::FETCH_ASSOC);
-                if ($user) {
-                    if ($hash === $user['password']) {
-                        $_SESSION['mail'] = $_POST['mail'];
-                        $_SESSION['mdp'] = $_POST['mdp'];
-                        $_SESSION['nom'] = $user['username'];
-                        $_SESSION['pseudo'] = $user['at_user_name'];
-                        $_SESSION['born'] = $user['birthdate']; 
-                        header("Location: login.php");
-                        exit();
-                    } else {
-                        echo 'Mot de passe incorrect.';
-                    }
-                } else {
-                    echo "Le compte n'existe pas.";
-                }
-            } catch (Exception $e) {
-                echo "Erreur lors de la connexion : " . $e->getMessage();
-            }
-        } else {
-            echo "Veuillez fournir une adresse e-mail et un mot de passe.";
-        }
-    } 
-}
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $form = new Connection();
-    $form->connect($_POST['mail'], $_POST['mdp']);
-}
-?>
--->
-
-</html> 
+</html>

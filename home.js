@@ -41,4 +41,17 @@ document.addEventListener('DOMContentLoaded', function () {
         year_options += "<option name'" + y + "'>" + y + "</option>"
     }
     document.getElementById("annee_naissance").innerHTML = year_options;
+
+    // let textArea = document.getElementById("textbox");
+    // let charCount = document.getElementById("char_count");
+    // let maxNumChars = 140;
+
+    // function charactersCount() {
+    //     let numOfChars = textArea.value.length;
+    //     let counter = maxNumChars - numOfChars;
+    //     charCount.textContent = counter + "/140";
+    // }
+
+    // textArea.addEventListener("input", charactersCount);
+
 });
