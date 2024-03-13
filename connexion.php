@@ -9,7 +9,7 @@ class Connexion
     private $pdo;
     private $salt = "vive le projet tweet_academy";
 
-    public function __construct($db_name, $db_host = "localhost", $db_user = "zoewac", $db_pass = "dykehqb9")
+    public function __construct($db_name, $db_host = "127.0.0.1", $db_user = "zoewac", $db_pass = "dykehqb9")
     {
         $this->db_host = $db_host;
         $this->db_name = $db_name;
@@ -17,7 +17,7 @@ class Connexion
         $this->db_pass = $db_pass;
     }
 
-    private function getPDO()
+    function getPDO()
     {
         if ($this->pdo === NULL) {
             try {
@@ -25,7 +25,7 @@ class Connexion
                 $this->pdo = new PDO($dsn, $this->db_user, $this->db_pass);
                 $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
-                throw new InvalidArgumentException("Database error: " . $e->getMessage());
+                throw new InvalidArgumentException("Datapdo error: " . $e->getMessage());
 
             }
         }
@@ -34,6 +34,7 @@ class Connexion
 
     
     function register($nom, $pseudo, $email, $mdp, $jour, $mois, $annee) {
+        session_start();
         $date = "$annee-$mois-$jour";
         if ($nom != "" && $pseudo != "" && $email != "" && $mdp != "" && $date != "") {
             $hash = hash('ripemd160', $this->salt . $mdp);
@@ -45,9 +46,9 @@ class Connexion
                 $con->bindParam(':mdp', $hash);
                 $con->bindParam(':date', $date);
                 $con->execute();
-                session_start();
                 $_SESSION['email'] = $email;
                 header("Location: profile.php");
+                exit();
             } catch (Exception $e) {
                 echo "Erreur lors de l'insertion de l'utilisateur : " . $e->getMessage();
             }
@@ -64,10 +65,10 @@ class Connexion
                 $user = $con->fetch(PDO::FETCH_ASSOC);
                 if ($user) {
                     if ($hash === $user['password']) {
+                        $_SESSION['mail'] = $user['mail'];
                         session_start();
-                        $userId = $_SESSION['userId'];
-                        header("Location: login.php");
-                        exit();
+                        header("Location: profile.php");
+                        // exit();
                     } else {
                         echo 'Mot de passe incorrect.';
                     }
@@ -78,5 +79,5 @@ class Connexion
                 echo "Erreur lors de la connexion : " . $e->getMessage();
             }
         }
-    } 
+    }
 }

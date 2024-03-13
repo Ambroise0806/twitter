@@ -7,7 +7,10 @@
 }
 
 .disabled{
-    cursor: not-allowed;
+    cursor: not-allowed !important;
+    background-color: transparent !important;
+    /* cursor: none; */
+    color: #0000;
 }
 
 .error_newPost{

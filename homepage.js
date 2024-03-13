@@ -1,71 +1,134 @@
-document.addEventListener('DOMContentLoaded', function () {
-    let newPost_container = document.getElementById('newPost_container')
-    let newPost_button = document.getElementById('newPost_button')
+document.addEventListener("DOMContentLoaded", function (event) {
+  //Light/Dark mode //
+  let themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");
+  let themeToggleLightIcon = document.getElementById("theme-toggle-light-icon");
 
+  if (
+    localStorage.getItem("color-theme") === "dark" ||
+    (!("color-theme" in localStorage) &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches)
+  ) {
+    themeToggleLightIcon.classList.remove("hidden");
+  } else {
+    themeToggleDarkIcon.classList.remove("hidden");
+  }
 
-    function CharTweet() {
-        let tweetContentLength = newPost_container.textLength
+  let themeToggleBtn = document.getElementById("theme-toggle");
+  themeToggleBtn.addEventListener("click", function () {
+    themeToggleDarkIcon.classList.toggle("hidden");
+    themeToggleLightIcon.classList.toggle("hidden");
 
-        if (tweetContentLength == 0) {
-            newPost_button.classList.add('disabled')
-        } else if (tweetContentLength > 140) {
-            alert("Votre tweet ne peut pas dépasser 140 charactères !")
-            newPost_button.classList.add('disabled')
-        } else {
-            newPost_button.classList.remove('disabled')
+    if (localStorage.getItem("color-theme")) {
+      if (localStorage.getItem("color-theme") === "light") {
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("color-theme", "dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("color-theme", "light");
+      }
+    } else {
+      if (document.documentElement.classList.contains("dark")) {
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("color-theme", "light");
+      } else {
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("color-theme", "dark");
+      }
+    }
+  });
+
+  // Tweet (Ajax request to server) //
+  loadDoc();
+  let id_tweet = 0;
+
+  function loadDoc() {
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "tweet.json");
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        // if (this.responseText != "") {
+        let response = JSON.parse(this.responseText);
+        for (let i = 0; i < 10; i++) {
+          let username = document.getElementById("username" + i);
+          username.innerHTML = response[id_tweet]["username"];
+          let atUsername = document.getElementById("atUsername" + i);
+          atUsername.innerHTML = response[id_tweet]["at_user_name"];
+          let date = document.getElementById("date" + i);
+          date.innerHTML = response[id_tweet]["time"];
+          let content = document.getElementById("content" + i);
+          let content_response = response[id_tweet]["content"];
+          content_response = content_response.replace(/\@(.*?)(\s|$)/g, "@");
+          console.log(content_response);
+          content.innerHTML = response[id_tweet]["content"];
+          id_tweet++;
         }
-    }
-    if(newPost_button != null){
-        newPost_button.addEventListener('click', CharTweet);
-    }
-    if(newPost_container != null){
-        newPost_container.addEventListener('keyup', CharTweet)
-    }
+        // }else{
+        // console.error("Empty response from the server");
+        // }
+      }
+    };
+    xhttp.send();
+  }
 
-    load_tweet();
-    let id_tweet = 0;
+  // Characters Count //
+  let newPost_container = document.getElementById("newPost_container");
+  let newPost_length = document.getElementById("newPost_length");
+  let newPost_button = document.getElementById("newPost_button");
+  let span = document.getElementById("span");
+  const maxNumChars = 140;
 
-    function load_tweet() {
-        const xhttp = new XMLHttpRequest()
-        xhttp.open("GET", "tweet.json")
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                let response = JSON.parse(this.responseText);
-                for (let i = 0; i < 10; i++) {
-                    let username = document.getElementById('username' + i)
-                    username.innerHTML = (response[id_tweet]['username'])
-                    let atUsername = document.getElementById('atUsername' + i)
-                    atUsername.innerHTML = (response[id_tweet]['at_user_name'])
-                    let date = document.getElementById('date' + i)
-                    date.innerHTML = (response[id_tweet]['time'])
-                    let content = document.getElementById('content' + i)
-                    let content_response = response[id_tweet]['content']
-                    let regexHashtag = /\#(.*?)(\s|$)/g 
-                    let array_hashtag = content_response.match(regexHashtag)
-                    content.innerHTML = ""
-                    if(array_hashtag !== null){
-                        array_hashtag.forEach(hashtag => {
-                            const params = new URLSearchParams({
-                                hashtag: hashtag,
-                            })
-                            content_response = content_response.replace(hashtag, '<a href="search.php?'+params+'" id="hashtag_link" style="color: skyblue">'+hashtag+'</a> ');
-                        });
-                    }
-                    let regexAt = /\@(.*?)(\s|$)/g 
-                    let array_at = content_response.match(regexAt)
-                    if(array_at !== null){
-                        array_at.forEach(at => {
-                            const params = new URLSearchParams({
-                                at: at,
-                            })
-                            content_response = content_response.replace(at, '<a href="profile.php?'+params+'" id="at_username_link" style="color: skyblue">'+at+'</a> ');
-                        });
-                    }
-                    content.innerHTML = content_response
-                    id_tweet++
-                }
-            }
-        }
-        xhttp.send()
+  const countCharacters = () => {
+    let numOfChars = newPost_container.value.length;
+    let count = maxNumChars - numOfChars;
+    newPost_length.textContent = count + "/140";
+
+    if (count < 0) {
+      newPost_length.style.color = "red";
+    } else if (count < 20) {
+      newPost_length.style.color = "orange";
+    } else {
+      newPost_length.style.color = "darkgray";
     }
+    if (numOfChars === 0) {
+      newPost_button.classList.add("disabled");
+    } else if (numOfChars > 140) {
+      span.textContent = "Your tweet cannot exceed 140 characters !";
+      newPost_button.classList.add("disabled");
+    } else {
+      newPost_button.classList.remove("disabled");
+    }
+  };
+
+  newPost_container.addEventListener("keyup", countCharacters);
+
+
+  const imageInput = document.querySelector('#newPost_button');
+  let uploadedImage = "";
+
+  imageInput.addEventListener('change', function() {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+          uploadedImage = reader.result;
+          document.querySelector('#newPost_container').style.backgroundImage = `url(${uploadedImage})`;
+      });
+      reader.readAsDataURL(this.files[0]);
+  })
 });
+
+
+// if(newPost_button) {
+// newPost_button.addEventListener('click', CharTweet)
+// }
+
+// function CharTweet() {
+//     let tweetContentLength = newPost_container.value.length
+
+//     if (tweetContentLength == 0) {
+//         newPost_button.classList.add('disabled')
+//     } else if (tweetContentLength > 140) {
+//         alert("Votre tweet ne peut pas dépasser 140 charactères !")
+//         newPost_button.classList.add('disabled')
+//     } else {
+//         newPost_button.classList.remove('disabled')
+//     }
+// }

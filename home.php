@@ -1,14 +1,23 @@
-<?php include("connexion.php");
-print_r($_POST['Username']);
-print_r($_POST['accountName']);
-print_r($_POST['email']);
-print_r($_POST['password']);
-print_r($_POST['mois_naissance']);
-print_r($_POST['jour_naissance']);
-print_r($_POST['annee_naissance']);
+<?php 
+//Inscription, données envoyés au serveur//
+include("connexion.php");
+$nom = $_POST['Username'];
+$pseudo = $_POST['accountName'];
+$email = $_POST['email'];
+$password = $_POST['password'];
+$mois = $_POST['mois_naissance'];
+$jour = $_POST['jour_naissance']; 
+$annee = $_POST['annee_naissance'];
+
 $con = new Connexion('twitter');
-$con->register($_POST['Username'], $_POST['accountName'], $_POST['email'], $_POST['password'], $_POST['jour_naissance'], $_POST['mois_naissance'], $_POST['annee_naissance'])
+$con->register($nom, $pseudo, $email, $password, $jour, $mois, $annee);
+
+//Connexion//
+
+$con->logIn($email,$password);
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
@@ -82,7 +91,7 @@ $con->register($_POST['Username'], $_POST['accountName'], $_POST['email'], $_POS
                             </div>
 
             <div class="row">
-            <label for="date_naissance" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your birthdate</label>
+            <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your birthdate</label>
             </div>
             <div>
                 <label for="mois_naissance" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Month</label>
@@ -189,7 +198,7 @@ $con->register($_POST['Username'], $_POST['accountName'], $_POST['email'], $_POS
                     </div>
                     <!-- Modal body -->
                     <div class="p-4 md:p-5">
-                        <form class="space-y-4" method="" action="#">
+                        <form class="space-y-4" method="POST" action="">
                             <div>
                                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
                                 <input type="email" name="email" id="loginEmail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" required />
@@ -207,7 +216,8 @@ $con->register($_POST['Username'], $_POST['accountName'], $_POST['email'], $_POS
                                 </div>
                                 <a href="#" class="text-sm text-blue-700 hover:underline dark:text-blue-500">Lost Password?</a>
                             </div>
-                            <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login to your account</button>
+                            <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                Login to your account</button>
                             <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
                                 Not registered? <a href="#" class="text-blue-700 hover:underline dark:text-blue-500">Create account</a>
                             </div>
@@ -226,4 +236,4 @@ $con->register($_POST['Username'], $_POST['accountName'], $_POST['email'], $_POS
 </section>
 </main>
 </body>
-</html> 
+</html>
