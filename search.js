@@ -45,7 +45,6 @@ document.addEventListener('DOMContentLoaded', function () {
     getAllTweet();
     
     function displayTweet(tweet_byHashtag, tmp0) {
-        console.log(tweet_byHashtag)
         tweet_byHashtag.forEach(element => {
             createTweet(tmp0, element)
         });

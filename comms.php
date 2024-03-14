@@ -1,7 +1,7 @@
 <?php
-class getTweet
-{
 
+class addComments
+{
     private $db_host;
     private $db_user;
     private $db_pass;
@@ -15,6 +15,7 @@ class getTweet
         $this->db_user = $db_user;
         $this->db_pass = $db_pass;
     }
+
     private function getPDO()
     {
         if ($this->pdo === NULL) {
@@ -29,19 +30,33 @@ class getTweet
         }
         return $this->pdo;
     }
-    public function getTweet()
+    public function addNewComment($userId, $content, $id_response)
     {
         try {
-            $sql = "SELECT tweet.id, username, at_user_name, time, content, profile_picture, id_response FROM tweet INNER JOIN user ON tweet.id_user = user.id ORDER BY tweet.id DESC;";
+            $sql = "INSERT INTO tweet (id_user, content) VALUES (:id_user, :content)";
             $statement = $this->getPDO()->prepare($sql);
+            $statement->bindParam(':id_user', $userId);
+            $statement->bindParam(':content', $content);
             $statement->execute();
-            $result = $statement->fetchAll();
-            echo json_encode($result);
         } catch (PDOException $e) {
             throw new InvalidArgumentException("Query error: " . $e->getMessage());
         }
     }
-}
 
-$exec = new getTweet('twitter');
-$exec->getTweet();
+    private function getCommentId()
+    {
+        try {
+            $sql = "SELECT id FROM tweet ORDER BY tweet.id DESC LIMIT 1;";
+            $statement = $this->getPDO()->prepare($sql);
+            $statement->execute();
+            $result = $statement->fetchAll();
+            return $result;
+        } catch (PDOException $e) {
+            throw new InvalidArgumentException("Query error: " . $e->getMessage());
+        }
+    }
+
+    private function addTweetResponse($result){
+        
+    }
+}

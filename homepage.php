@@ -192,8 +192,7 @@
                         </svg>
                         <span class="sr-only">Set location</span>
                     </button>
-                    <button type="button"
-                        class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                    <button type="button" class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 20 18">
                             <path
@@ -215,53 +214,6 @@
 
         <!-- fil d'actualite -->
         <main id="tweet"></main>
-        <div class="w-auto mx-auto max-w-screen-xl md:flex md:items-center md:justify-between">
-            <ul class="flex mt-4">
-                <li>
-                    <svg class="w-6 h-6 text-gray-400 text-sm dark:text-gray-500" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M16 10.5h0m-4 0h0m-4 0h0M5 5h14c.6 0 1 .4 1 1v9c0 .6-.4 1-1 1h-6.6a1 1 0 0 0-.7.3L8.8 19c-.3.3-.8 0-.8-.4V17c0-.6-.4-1-1-1H5a1 1 0 0 1-1-1V6c0-.6.4-1 1-1Z" />
-                    </svg>
-                </li>
-                <li class="text-gray-600 font-medium text-sm dark:text-gray-500">300</li>
-                <li>
-                    <svg class="w-6 h-6 text-gray-400 text-sm  dark:text-gray-500" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3" />
-                    </svg>
-                </li>
-                <li class="text-gray-600 font-medium text-sm dark:text-gray-500">100K</li>
-                <li>
-                    <svg class="w-6 h-6 text-gray-400 text-sm  dark:text-gray-500" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z" />
-                    </svg>
-                </li>
-                <li class="text-gray-600 font-medium text-sm dark:text-gray-500">668</li>
-                <li>
-                    <svg class="w-6 h-6 text-gray-400 text-sm  dark:text-gray-500" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-width="2"
-                            d="M21 12c0 1.2-4 6-9 6s-9-4.8-9-6c0-1.2 4-6 9-6s9 4.8 9 6Z" />
-                        <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                    </svg>
-                </li>
-                <li class="text-gray-600 font-medium text-sm dark:text-gray-500">68K</li>
-                <li>
-                    <svg class="w-6 h-6 text-gray-400 text-sm dark:text-gray-500" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 13V4M7 14H5a1 1 0 0 0-1 1v4c0 .6.4 1 1 1h14c.6 0 1-.4 1-1v-4c0-.6-.4-1-1-1h-2m-1-5-4 5-4-5m9 8h0" />
-                    </svg>
-                </li>
-            </ul>
-        </div>
-        </div>
-        </div>
-        <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
     </main>
     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
@@ -323,7 +275,8 @@
             <button data-tooltip-target="tooltip-inbox" type="button"
                 class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
                 <a href="./inbox.php">
-                    <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"" aria-hidden="
+                    <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+                        aria-hidden="
                         true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
                             d="m3.5 5.5 7.9 6c.4.3.8.3 1.2 0l7.9-6M4 19h16c.6 0 1-.4 1-1V6c0-.6-.4-1-1-1H4a1 1 0 0 0-1 1v12c0 .6.4 1 1 1Z" />
@@ -356,13 +309,24 @@
             </div>
         </div>
     </div>
+    <script src="comms.js"></script>
 </body>
 
 </html>
 <?php
-include('addTweet.php');
-$newTweet = $_POST['newTweet'];
 
-$db = new addTweet('twitter');
-$db->addNewTweet(1, $newTweet);
+if (isset($_POST["comment"]) && isset($_POST["id_response"])) {
+    $newComment = $_POST['comment'];
+    $id_response = $_POST["id_response"];
+    include('comms.php');
+    $db = new addComments('twitter');
+    $db->addNewComment(1, $newComment, $id_response);
+}
+
+if (isset($_POST['newTweet'])) {
+    $newTweet = $_POST['newTweet'];
+    include('addTweet.php');
+    $db = new addTweet('twitter');
+    $db->addNewTweet(1, $newTweet);
+}
 ?>
