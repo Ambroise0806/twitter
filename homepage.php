@@ -192,7 +192,7 @@
                     <div class="flex justify-center">
                         <!-- <img src="" class="rounded-lg" alt="Image d'un tweetos"> -->
                     </div>
-
+                    
                     <div class="w-auto mx-auto max-w-screen-xl md:flex md:items-center md:justify-between">
                         <ul class="flex mt-4">
                             <li>

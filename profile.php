@@ -45,6 +45,7 @@ session_destroy();
     <link rel="stylesheet" href="./output.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./profile.css">
     <script src="homepage.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <title>Twitter</title>
@@ -139,9 +140,61 @@ session_destroy();
 
         <body>
             <div class="flex flex-wrap">
-                <img class="w-16 h-16 m-4 rounded-full ring-2 ring-gray-400 dark:ring-gray-500" src="Assets/robin.jpg" alt="user photo">
-                <button type="button" class="w-16 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  text-center dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-white dark:focus:ring-blue-800">Edit Profile</button>
+                <img class="w-16 h-16 m-4 rounded-full ring-2 ring-gray-400 dark:ring-gray-500" src="<?php echo htmlspecialchars($user['profile_picture'] . ' ')?>" alt="user photo">
+                <button id="editProfile"  onclick="openEdit()" type="button" class="w-16 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  text-center dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-white dark:focus:ring-blue-800">Edit Profile</button>
             </div>
+            <!-- Edit your profile form  -->
+            <div class="edit-popup" id="editMyProfile">
+                <form action="" class="form-container" method="post">
+                    <h1>Edit your profile</h1>
+                    
+                    <label for="username"><b>Username</b></label>
+                    <input type="text" name="username">
+
+                    <label for="at_user_name"><b>@ Username</b></label>
+                    <input type="text" name="at_user_name">
+
+                    <label for="profile_picture"><b>Profile Pic</b></label>
+                    <input type="file" name="profile_picture">
+
+                    <label for="bio"><b>Biography</b></label>
+                    <input type="text" name="bio">
+
+                    <label for="banner"><b>Banner</b></label>
+                    <input type="file" name="banner">
+                    
+                    <label for="mail"><b>Email</b></label>
+                    <input type="text" name="mail">
+
+                    <label for="password"><b>Password</b></label>
+                    <input type="text" name="password">
+
+                    <label for="birthdate"><b>Birthdate</b></label>
+                    <input type="date" name="birthdate">
+
+                    <input type="radio" id="private" name="privacy" value="true">
+                    <label for="private">Private Account</label>
+                    <input type="radio" id="public" name="privacy" vlaue="false">
+                    <label for="public">Public Account</label>
+
+                    <label for="city"><b>City</b></label>
+                    <input type="text" name="city">
+
+                    <button type="submit" class="btn">Save changes</button>
+                    <button type="button" class="cancel-btn" id="closeEdit" onclick="closeEdit()">Close</button>
+            </div>
+
+            <?php
+                function updateProfile($username, $at_user_name, $profile_pic, $bio, $banner, $mail, $password, $birthdate, $private, $city) {
+                    $con = new Connexion('twitter');
+                    $sql = "UPDATE user SET username='$username', at_user_name='$at_user_name', profile_picture='$profile_pic', bio='$bio', banner='$banner', password='$password', birthdate='$birthdate', private='$private', city='$city' WHERE id= :id";
+                    $statement = $con->getPDO()->prepare($sql);
+                    $statement->bindParam(':id', $id_user);
+                    $statement->execute();
+                    $user = $statement->fetch(PDO::FETCH_ASSOC);
+                }
+            ?>
+            <script src="editProfile.js"></script>
             <div class="text-gray-900 font-bold text-lg dark:text-white">
                 <?php echo htmlspecialchars($user['username'] . ' ') ?> 
             </div>
@@ -152,13 +205,22 @@ session_destroy();
                 <svg class="w-[24px] h-[24px] text-gray-800 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14c.6 0 1-.4 1-1V7c0-.6-.4-1-1-1H5a1 1 0 0 0-1 1v12c0 .6.4 1 1 1Zm3-7h0v0h0v0Zm4 0h0v0h0v0Zm4 0h0v0h0v0Zm-8 4h0v0h0v0Zm4 0h0v0h0v0Zm4 0h0v0h0v0Z" />
                 </svg>
-                <span class="text-gray-800 dark:text-gray-500">Joined February 2024</span>
+                <span class="text-gray-800 dark:text-gray-500">
+                    <p>Joined <?php
+                    //Creation time from the account
+                    echo htmlspecialchars($user['creation_time'] . ' ') 
+                    ?></p>
+                </span>
             </div>
             <div class="text-gray-800 dark:text-gray-500">
                 5 Following
                 100 Followers
-                <?php /*ici ma puce*/ 
-                    $con = $this->getPDO()->prepare?>
+                    <?php /*ici ma puce*/ 
+                    $con = $this->getPDO()->prepare("SELECT at_user_name, COUNT(id_user) FROM user INNER JOIN follow ON user.id = follow.id WHERE id_follow = :at_user_name");
+                    $con->execute();
+                    $follower = $con->fetch(PDO::FETCH_ASSOC);
+                    echo $follower;
+                    ?>
             </div>
 
         </body>
