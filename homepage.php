@@ -4,15 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./output.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="front/css/output.css">
+    <link rel="stylesheet" href="front/css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" />
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="homepage.js"></script>
-    <script src="light_mode.js"></script>
-    <script src="autocompletion.js"></script>
+    <script src="front/javascript/homepage.js"></script>
+    <script src="front/javascript/light_mode.js"></script>
+    <script src="front/javascript/autocompletion.js"></script>
+    <script src="front/javascript/comms.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <title>Twitter</title>
 </head>
@@ -309,23 +310,20 @@
             </div>
         </div>
     </div>
-    <script src="comms.js"></script>
 </body>
-
 </html>
 <?php
-
 if (isset($_POST["comment"]) && isset($_POST["id_response"])) {
     $newComment = $_POST['comment'];
     $id_response = $_POST["id_response"];
-    include('comms.php');
-    $db = new addComments('twitter');
-    $db->addNewComment(1, $newComment, $id_response);
+    include('./back/comms.php');
+    $db = new Comments('twitter');
+    $db->addComment_db(1, $newComment, $id_response);
 }
 
 if (isset($_POST['newTweet'])) {
     $newTweet = $_POST['newTweet'];
-    include('addTweet.php');
+    include('./back/addTweet_db.php');
     $db = new addTweet('twitter');
     $db->addNewTweet(1, $newTweet);
 }

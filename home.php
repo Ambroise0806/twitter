@@ -1,24 +1,22 @@
-<?php include("connexion.php");
+<?php include("./back/connexion.php");
 
 $con = new Connexion('twitter');
 $con->register($_POST['Username'], $_POST['accountName'], $_POST['email'], $_POST['password'], $_POST['jour_naissance'], $_POST['mois_naissance'], $_POST['annee_naissance']);
 $con->logIn($_POST['email'], $_POST['password']);
 ?>
-
 <!DOCTYPE html>
 <html lang="en" class="dark">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./output.css">
+    <link rel="stylesheet" href="front/css/output.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" />
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <script src="home.js"></script>
+    <link rel="stylesheet" href="front/css/style.css">
+    <script src="front/javascript/home.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="home_jquery.js"></script>
+    <script src="front/javascript/home_jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <title>Twitter</title>
 </head>
