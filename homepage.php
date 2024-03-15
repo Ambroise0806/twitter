@@ -193,7 +193,8 @@
                         </svg>
                         <span class="sr-only">Set location</span>
                     </button>
-                    <button type="button" class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                    <button type="button"
+                        class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 20 18">
                             <path
@@ -311,19 +312,20 @@
         </div>
     </div>
 </body>
+
 </html>
 <?php
-if (isset($_POST["comment"]) && isset($_POST["id_response"])) {
+if (isset ($_POST["comment"]) && isset ($_POST["id_response"])) {
     $newComment = $_POST['comment'];
     $id_response = $_POST["id_response"];
-    include('./back/comms.php');
+    include ('./back/comms.php');
     $db = new Comments('twitter');
-    $db->addComment_db(1, $newComment, $id_response);
+    $db->addComment_db(2, $newComment, $id_response);
 }
 
-if (isset($_POST['newTweet'])) {
+if (isset ($_POST['newTweet'])) {
     $newTweet = $_POST['newTweet'];
-    include('./back/addTweet_db.php');
+    include ('./back/addTweet_db.php');
     $db = new addTweet('twitter');
     $db->addNewTweet(1, $newTweet);
 }

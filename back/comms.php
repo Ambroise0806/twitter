@@ -1,5 +1,4 @@
 <?php
-
 class Comments
 {
     private $db_host;

@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
         xhttp.send()
-        console.log(response2)
         response2.forEach(element => {
             document.getElementById('tweet_id_'+element[0]).childNodes[1].childNodes[13].childNodes[1].childNodes[3].innerHTML = element[1]
         });
