@@ -1,6 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
     let newPost_container = document.getElementById('newPost_container')
     let newPost_button = document.getElementById('newPost_button')
+    let response = []
+    let response2 = []
+    if (newPost_button != null) {
+        newPost_button.addEventListener('click', CharTweet);
+    }
+    if (newPost_container != null) {
+        newPost_container.addEventListener('keyup', CharTweet)
+    }
+    
+    load_tweet()
+    getNum_comments()
 
     function CharTweet() {
         let tweetContentLength = newPost_container.textLength
@@ -14,23 +25,17 @@ document.addEventListener('DOMContentLoaded', function () {
             newPost_button.classList.remove('disabled')
         }
     }
-    if (newPost_button != null) {
-        newPost_button.addEventListener('click', CharTweet);
-    }
-    if (newPost_container != null) {
-        newPost_container.addEventListener('keyup', CharTweet)
-    }
 
-    load_tweet();
+
     function load_tweet() {
         const xhttp = new XMLHttpRequest()
-        xhttp.open("GET", "controller/getTweet.php")
+        xhttp.open("GET", "controller/getTweet.php", false)
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                let response = JSON.parse(this.responseText);
+                response = JSON.parse(this.responseText);
                 let i = 0
                 response.forEach(element => {
-                    if(element[6] == null){
+                    if (element[6] == null) {
                         createTweet(element, i)
                         i++
                     }
@@ -39,11 +44,26 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         xhttp.send()
     }
+    
+    function getNum_comments() {
+        const xhttp = new XMLHttpRequest()
+        xhttp.open("GET", "././controller/getNum_Comms.php", false)
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                response2 = JSON.parse(this.responseText);
+            }
+        }
+        xhttp.send()
+        console.log(response2)
+        response2.forEach(element => {
+            document.getElementById('tweet_id_'+element[0]).childNodes[1].childNodes[13].childNodes[1].childNodes[3].innerHTML = element[1]
+        });
+}
 
     function createTweet(element, i) {
         let main = document.getElementById('tweet')
-        const tweet = $(`<div class="flex flex-col">
-        <div id="tweet_id_`+element[0]+`" class="h-auto w-auto p-4 m-4 rounded-lg bg-gray-50 dark:bg-gray-900 dark:text-white">
+        const tweet = $(`<div id="show_comms" class="flex flex-col">
+        <div id="tweet_id_`+ element[0] + `" class="h-auto w-auto p-4 m-4 rounded-lg bg-gray-50 dark:bg-gray-900 dark:text-white">
         <div class="flex flex-wrap w-auto items-center">
         <img src="assets/pp_nav.jpg" class="w-12 h-12 rounded-full" alt="Profil's Icon">
         <h1 id="username0" class="flex flex-col font-bold m-2">`+ element[1] + `</h1>
@@ -65,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <span id="date0" class="flex align-start ml-3 text-gray-500">`+ element[3] + `</span>
         </div>          
         <div class="w-auto px-auto ml-5 mb-2">
-        <p id="content`+i+`"></p>    
+        <p id="content`+ i + `"></p>    
         </div>          
         </div>
         <div class="flex justify-center">
@@ -74,31 +94,31 @@ document.addEventListener('DOMContentLoaded', function () {
         
         <div class="w-auto mx-auto max-w-screen-xl md:flex md:items-center md:justify-between">
         <ul class="flex mt-4">  
-        <li id="comms" class="`+element[0]+`">
+        <li id="comms" class="`+ element[0] + `">
         <svg class="w-6 h-6 text-gray-400 text-sm dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <path id="path_comms" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 10.5h0m-4 0h0m-4 0h0M5 5h14c.6 0 1 .4 1 1v9c0 .6-.4 1-1 1h-6.6a1 1 0 0 0-.7.3L8.8 19c-.3.3-.8 0-.8-.4V17c0-.6-.4-1-1-1H5a1 1 0 0 1-1-1V6c0-.6.4-1 1-1Z"/>
         </svg>
         </li>
-        <li class="text-gray-600 font-medium text-sm dark:text-gray-500">300</li>
-        <li id="retweet" class="`+element[0]+`">
+        <li class="text-gray-600 font-medium text-sm dark:text-gray-500">0</li>
+        <li id="retweet" class="`+ element[0] + `">
         <svg class="w-6 h-6 text-gray-400 text-sm  dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <path id="path_retweet" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3"/>
         </svg>
         </li>
-        <li class="text-gray-600 font-medium text-sm dark:text-gray-500">100K</li>
+        <li class="text-gray-600 font-medium text-sm dark:text-gray-500">0</li>
         <li>
         <svg class="w-6 h-6 text-gray-400 text-sm  dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z"/>
         </svg>
         </li>
-        <li class="text-gray-600 font-medium text-sm dark:text-gray-500">668</li>
+        <li class="text-gray-600 font-medium text-sm dark:text-gray-500">0</li>
         <li>
         <svg class="w-6 h-6 text-gray-400 text-sm  dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4 6-9 6s-9-4.8-9-6c0-1.2 4-6 9-6s9 4.8 9 6Z"/>
         <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
         </svg>
         </li>
-        <li class="text-gray-600 font-medium text-sm dark:text-gray-500">68K</li>
+        <li class="text-gray-600 font-medium text-sm dark:text-gray-500">0</li>
         <li>
         <svg class="w-6 h-6 text-gray-400 text-sm dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13V4M7 14H5a1 1 0 0 0-1 1v4c0 .6.4 1 1 1h14c.6 0 1-.4 1-1v-4c0-.6-.4-1-1-1h-2m-1-5-4 5-4-5m9 8h0"/>
@@ -112,10 +132,10 @@ document.addEventListener('DOMContentLoaded', function () {
         main.appendChild(tweet)
         appendContent(element, i)
     }
-    
+
     function appendContent(element, i) {
         let content_response = element[4]
-        let p = document.getElementById('content'+i)
+        let p = document.getElementById('content' + i)
         let regexHashtag = /\#(.*?)(\s|$)/g
         let array_hashtag = content_response.match(regexHashtag)
         p.innerHTML = ""
@@ -137,6 +157,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 content_response = content_response.replace(at, '<a href="profile.php?' + params + '" id="at_username_link" style="color: skyblue">' + at + '</a> ');
             });
         }
-        p.innerHTML = content_response        
+        p.innerHTML = content_response
     }
 });

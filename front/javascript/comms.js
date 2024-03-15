@@ -1,14 +1,17 @@
 $(document).ready(function () {
+    let response = []
     createModal()
-    let button_comms
-    let button_rt
-    button_comms = document.querySelectorAll('#comms')
-    button_rt = document.querySelectorAll('#retweet')
+    let button_comms = document.querySelectorAll('#comms')
+    let button_rt = document.querySelectorAll('#retweet')
     let myModal = document.getElementById('myLoginModal')
     let closeModal = document.getElementById('closeLoginModal')
     let path_comms = document.querySelectorAll('#path_comms')
     let path_retweet = document.querySelectorAll('#path_retweet')
     let input_response = document.getElementById('input_response')
+    let button_show_comms = document.querySelectorAll('#show_comms')
+    let comms_already_shown = false
+    load_comments();
+    displayComments(response)
 
     for (let i = 0; i < button_comms.length; i++) {
         button_comms[i].addEventListener('click', function () {
@@ -20,6 +23,22 @@ $(document).ready(function () {
 
         button_rt[i].addEventListener('click', function () {
             path_retweet[i].setAttribute('stroke', 'lightgreen')
+        })
+
+        button_show_comms[i].addEventListener('click', () => {
+            let comms_to_show = button_comms[i].getAttribute('class')
+            let comms = document.querySelectorAll('#comment' + comms_to_show)
+            if (comms_already_shown == false) {
+                for (let j = 0; j < comms.length; j++) {
+                    comms[j].classList.remove('hidden')
+                }
+                comms_already_shown = true
+            } else {
+                for (let j = 0; j < comms.length; j++) {
+                    comms[j].classList.add('hidden')
+                }
+                comms_already_shown = false
+            }
         })
 
         closeModal.addEventListener('click', function () {
@@ -76,15 +95,13 @@ $(document).ready(function () {
         main.appendChild(modal)
     }
 
-    load_comments();
+
     function load_comments() {
-        let response = []
         const xhttp = new XMLHttpRequest()
         xhttp.open("GET", "././controller/getComms.php", false)
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 response = JSON.parse(this.responseText);
-                displayComments(response)
             }
         }
         xhttp.send()
@@ -92,8 +109,9 @@ $(document).ready(function () {
 
     function displayComments(response) {
         response.forEach(element => {
-            const comment = $(`<div class="flex flex-col">
-            <div id="tweet_id_`+ element[0] + `" class="h-auto w-auto p-4 m-4 rounded-lg bg-gray-50 dark:bg-gray-900 dark:text-white">
+            if (element[6] != null) {
+                const comment = $(`<div id="comment` + element[6] + `" class="flex flex-col hidden">
+            <div id="tweet_id_`+ element[6] + `" class="h-auto w-auto p-4 m-4 rounded-lg bg-gray-50 dark:bg-gray-900 dark:text-white">
             <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
             <div class="flex flex-wrap w-auto items-center">
             <img src="assets/pp_nav.jpg" class="w-12 h-12 rounded-full" alt="Profil's Icon">
@@ -102,12 +120,11 @@ $(document).ready(function () {
             <span id="date0" class="flex align-start ml-3 text-gray-500">`+ element[3] + `</span>
             <div class="flex flex-col justify">
             <div class="w-auto px-auto ml-5 mb-2">
-            <p id="content">`+element[4]+`</p>    
+            <p id="content">`+ element[4] + `</p>    
             </div>          
             </div>
             </div>
             </div>`)[0]
-            if (element[6] != null) {
                 document.getElementById('tweet_id_' + element[6]).childNodes[1].appendChild(comment)
             }
         });
