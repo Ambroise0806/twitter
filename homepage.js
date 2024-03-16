@@ -3,15 +3,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
   let themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");
   let themeToggleLightIcon = document.getElementById("theme-toggle-light-icon");
 
-  if (
-    localStorage.getItem("color-theme") === "dark" ||
-    (!("color-theme" in localStorage) &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches)
-  ) {
+  function setDefaultTheme() { 
+  if (localStorage.getItem("color-theme") === "dark") {
+    document.documentElement.classList.add('dark');
     themeToggleLightIcon.classList.remove("hidden");
+    themeToggleDarkIcon.classList.add("hidden");
   } else {
-    themeToggleDarkIcon.classList.remove("hidden");
+    document.documentElement.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove("hidden");
+      themeToggleLightIcon.classList.add("hidden");
+    }
   }
+
+  setDefaultTheme();
 
   let themeToggleBtn = document.getElementById("theme-toggle");
   themeToggleBtn.addEventListener("click", function () {
@@ -50,17 +54,20 @@ document.addEventListener("DOMContentLoaded", function (event) {
         let response = JSON.parse(this.responseText);
         for (let i = 0; i < 10; i++) {
           let username = document.getElementById("username" + i);
-          username.innerHTML = response[id_tweet]["username"];
           let atUsername = document.getElementById("atUsername" + i);
-          atUsername.innerHTML = response[id_tweet]["at_user_name"];
           let date = document.getElementById("date" + i);
-          date.innerHTML = response[id_tweet]["time"];
           let content = document.getElementById("content" + i);
+
+          if(username && atUsername && date && content) { 
+          username.innerHTML = response[id_tweet]["username"];
+          atUsername.innerHTML = response[id_tweet]["at_user_name"];
+          date.innerHTML = response[id_tweet]["time"];
           let content_response = response[id_tweet]["content"];
           content_response = content_response.replace(/\@(.*?)(\s|$)/g, "@");
           console.log(content_response);
           content.innerHTML = response[id_tweet]["content"];
           id_tweet++;
+          }
         }
         // }else{
         // console.error("Empty response from the server");
@@ -70,14 +77,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
     xhttp.send();
   }
 
-  // Characters Count //
+  //Post Characters Count //
   let newPost_container = document.getElementById("newPost_container");
   let newPost_length = document.getElementById("newPost_length");
   let newPost_button = document.getElementById("newPost_button");
   let span = document.getElementById("span");
   const maxNumChars = 140;
 
-  const countCharacters = () => {
+  function countCharacters(event) {
     let numOfChars = newPost_container.value.length;
     let count = maxNumChars - numOfChars;
     newPost_length.textContent = count + "/140";
@@ -87,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     } else if (count < 20) {
       newPost_length.style.color = "orange";
     } else {
-      newPost_length.style.color = "darkgray";
+      newPost_length.style.color = "gray";
     }
     if (numOfChars === 0) {
       newPost_button.classList.add("disabled");
@@ -97,24 +104,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
     } else {
       newPost_button.classList.remove("disabled");
     }
-  };
+};
 
-  newPost_container.addEventListener("keyup", countCharacters);
-});
+    if(newPost_container) { 
+      newPost_container.addEventListener("keyup", countCharacters);
+    }
 
-// if(newPost_button) {
-// newPost_button.addEventListener('click', CharTweet)
-// }
-
-// function CharTweet() {
-//     let tweetContentLength = newPost_container.value.length
-
-//     if (tweetContentLength == 0) {
-//         newPost_button.classList.add('disabled')
-//     } else if (tweetContentLength > 140) {
-//         alert("Votre tweet ne peut pas dépasser 140 charactères !")
-//         newPost_button.classList.add('disabled')
-//     } else {
-//         newPost_button.classList.remove('disabled')
-//     }
-// }
+  });

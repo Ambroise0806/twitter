@@ -58,3 +58,64 @@
 #accountName {
     outline: none;
 }
+
+#container {
+	width: 80%;
+	margin: 50px auto;
+	padding: 2px 20px 20px 20px;
+	background: #fff;
+}
+/* Inbox Page's CSS  */
+
+.frameChat {
+    max-width: 1024px;
+    width: 100%;
+    margin: auto;
+}
+
+.header {
+    background: #0000;
+}
+
+.header h1 {
+    max-width: 1024px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 50px 0;
+    font-size: 20px;
+    color: #000;
+    text-align: center;
+    font-weight: 300;
+}
+
+.controlPanel {
+    margin: auto;
+    text-align: center;
+    margin-top: 24%;
+}
+
+#results {
+    max-width: 1024px;
+    width: 100%;
+    padding: 10px;
+    background: gray;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.chatBody {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.chatBody form {
+    margin: 0;
+}
+
+.logout {
+    float: right;
+    color: #000;
+    text-decoration: none;
+    font-size: 15px;
+}

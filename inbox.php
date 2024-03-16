@@ -1,10 +1,20 @@
-<?php 
-include("connexion.php");
+<?php
+    session_start();
+    include 'connexion.php';
+
+    if (isset($_POST['username'])) {
+        $_SESSION['username'] = $_POST['username'];
+    }
+
+    if(isset($_GET['logout'])) {
+        unset($_SESSION['username']);
+        header('Location : inbox.php');
+    }
 
 ?>
 
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -12,10 +22,11 @@ include("connexion.php");
     <link rel="stylesheet" href="./output.css">
     <link rel="stylesheet" href="./style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" />
-    <!-- <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"> -->
-    <script src="homepage.js"></script>
+    <script src="inbox.js"></script>
+    <!-- <script src="homepage.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emoji-button@0.6.0/dist/index.min.js"></script>
     <title>Twitter</title>
 </head>
 
@@ -126,11 +137,139 @@ include("connexion.php");
     </aside>
     </header>
 
-    <main class="flex flex-col m-2" style="margin-top: 30%; margin-bottom: 20%;">
-      <body>
+    <main class="flex flex-col m-2" style="margin-top: 10%; margin-bottom: 10%;">
+
+    <div class="header">
+        <h1>Your Chatroom</h1>
+
+        <!-- <?php $_SESSION['username']?> -->
+            <?php if (isset($_SESSION['username'])) { 
+                ?> <a class="float-right no-underline text-red-700 hover:text-white border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900" href="?logout">Disconnect</a> 
+            <?php } ?>
+    </div>
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-3 gap-4">
+            <div class="col-span-1 bg-gray-200 shadow rounded-lg p-4 dark:bg-gray-500">
+                <h2 class="text-xl font-bold mb-4">Users</h2>
+                <ul>
+                    <li>User 1</li>
+                    <li>User 2</li>
+                    <li>User 3</li>
+                    <li>User 4</li>
+                    <li>User 5</li>
+                </ul>
+            </div>
+            <div class="col-span-2 bg-gray-200 shadow rounded-lg p-4 dark:bg-gray-500">
+            <h2 class="text-xl font-bold mb-4">Messages</h2>
+            <div class="mb-4">
+                <p><strong>User 1:</strong> Hello !</p>
+                <p><strong>User 2:</strong> Hi there !</p>
+                <p><strong>User 3:</strong> How's it going ?</p>
+            </div>
+            <form method="POST">
+            <label for="chat" class="sr-only">Your message</label>
+             <div class="flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700">
+                 <button type="button" class="inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                     <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                         <path fill="currentColor" d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"/>
+                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 1H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"/>
+                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"/>
+                     </svg>
+                     <span class="sr-only">Upload image</span>
+                 </button>
+                 <button type="button" id="emojiButton" class="p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                     <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.408 7.5h.01m-6.876 0h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM4.6 11a5.5 5.5 0 0 0 10.81 0H4.6Z"/>
+                     </svg>
+                     <span class="sr-only">Add emoji</span>
+                 </button>
+                 <input type="text" name="chat" id="msgBox" rows="1" class="mt-1 form-input block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your message..."></textarea>
+                     <button type="submit" name="send" id="send" class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600">
+                     <svg class="w-5 h-5 rotate-90 rtl:-rotate-90" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                         <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z"/>
+                     </svg>
+                     <span class="sr-only">Send message</span>
+                 </button>
+            </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="frameChat">
+        <?php if(isset($_SESSION['username'])) { ?> 
+    <div id="results"></div>
+    <div class="chatBody">
+        <form method="POST" onsubmit="return chatBegin();">
+        <label for="chat" class="sr-only">Your message</label>
+             <div class="flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700">
+                 <button type="button" class="inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                     <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                         <path fill="currentColor" d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"/>
+                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 1H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"/>
+                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"/>
+                     </svg>
+                     <span class="sr-only">Upload image</span>
+                 </button>
+                 <button type="button" id="emojiButton" class="p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                     <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.408 7.5h.01m-6.876 0h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM4.6 11a5.5 5.5 0 0 0 10.81 0H4.6Z"/>
+                     </svg>
+                     <span class="sr-only">Add emoji</span>
+                 </button>
+                 <input type="text" name="chat" id="msgBox" rows="1" class="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your message..."></textarea>
+                     <button type="submit" name="send" id="send" class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600">
+                     <svg class="w-5 h-5 rotate-90 rtl:-rotate-90" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                         <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z"/>
+                     </svg>
+                     <span class="sr-only">Send message</span>
+                 </button>
+                 <input type="button" class="text-red-700 hover:text-white border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900" 
+            name="clear" id="clear" value="X" title="Clear the discussion"/>
+             </div>
+         </form> 
+            <!-- <input type="text" name="chat" id="msgBox" placeholder="Tap your message ..."/>
+            <input type="submit" name="send" id="send" class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"" value="Send"/>
+        </form> -->
+    </div>
+    <script>
+        function chatBegin() {
+    if($('#chat').val() == ' ' || $('#msgBox').val() == ' ') return false;
+    $.ajax({
+      url: 'get_chat.php',
+      data: {msg:$('#msgBox').val(), send:true},
+      method: 'post',
+      success:function(data) {
+        $('#results').html(data);
+        $('#msgBox').val('');
+        document.getElementById('results').scrollTop = document.getElementById('results').scrollHeigth;
+      }
+    })
+    return false;
+  };
+
+setInterval(function() {
+  $.ajax({
+    url:'get_chat.php',
+    data:{get:true},
+    method:'post',
+    success:function(data){
+      $('#results').html(data);
+    }
+  })
+}, 1000);
+</script>
+
+<?php }else{ ?>
+    <div class="controlPanel">
+        <form method="POST">
+            <input type="text" class="input-user block px-5 py-2.5 me-2 mb-2 text-center w-auto text-md text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your name here" name="username"/>
+            <input type="submit" class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800" value="Start a discussion"/>
+        </form>
+    </div>
+<?php } ?>
 
       <!-- Private Message -->
-         <div class="flex items-start gap-2.5">
+         <!-- <div class="flex items-start gap-2.5">
             <img class="w-10 h-10 rounded-full" src="assets/zoro.png" alt="Zoro's image">
             <div class="flex flex-col gap-1 w-full max-w-[320px]">
                <div class="flex items-center space-x-2 rtl:space-x-reverse">
@@ -167,10 +306,10 @@ include("connexion.php");
          </ul>
       </div>
    </div>
-   <hr class="h-px bg-gray-200 border-0 dark:bg-gray-700" style="margin-top:10px">
+   <hr class="h-px bg-gray-200 border-0 dark:bg-gray-700" style="margin-top:10px"> -->
 
 <!-- Answer -->
-<div class="flex mt-4 items-start gap-6.5">
+<!-- <div class="flex mt-4 items-start gap-6.5">
             <img class="w-10 h-10 rounded-full" src="assets/zoro.png" alt="Zoro's image">
             <div class="flex flex-col gap-1 w-full max-w-[320px]">
                <div class="flex items-center space-x-2 rtl:space-x-reverse">
@@ -213,11 +352,11 @@ include("connexion.php");
 
    
    <!-- Footer -->
-   <div class="fixed z-50 w-full h-16 max-w-lg -translate-x-1/2 bg-white border border-gray-200 bottom-0 left-1/2 dark:bg-gray-700 dark:border-gray-600">
+   <!-- <div class="fixed z-50 w-full h-16 max-w-lg -translate-x-1/2 bg-white border border-gray-200 bottom-0 left-1/2 dark:bg-gray-700 dark:border-gray-600"> -->
       <!-- <div class="grid h-full max-w-lg grid-cols-5 mx-auto"> -->
          <!-- MP input -->
          
-         <form>
+         <!-- <form>
              <label for="chat" class="sr-only">Your message</label>
              <div class="flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700">
                  <button type="button" class="inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
@@ -228,13 +367,13 @@ include("connexion.php");
                      </svg>
                      <span class="sr-only">Upload image</span>
                  </button>
-                 <button type="button" class="p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                 <button type="button" id="emojiButton" class="p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
                      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.408 7.5h.01m-6.876 0h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM4.6 11a5.5 5.5 0 0 0 10.81 0H4.6Z"/>
                      </svg>
                      <span class="sr-only">Add emoji</span>
                  </button>
-                 <textarea id="chat" rows="1" class="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your message..."></textarea>
+                 <input type="text" id="chat" rows="1" class="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your message..."></textarea>
                      <button type="submit" class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600">
                      <svg class="w-5 h-5 rotate-90 rtl:-rotate-90" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
                          <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z"/>
@@ -242,7 +381,7 @@ include("connexion.php");
                      <span class="sr-only">Send message</span>
                  </button>
              </div>
-         </form>
+         </form> -->
          <!-- <button data-tooltip-target="tooltip-home" type="button" class="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
                         <a href="homepage.php">
                             <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -310,8 +449,8 @@ include("connexion.php");
                     </div>
                 </div>
             </div> -->
-
 </body>
 </html>
 
 <!-- SELECT messages.id_user, user.username, content, convo.name, convo.picture, messages.time FROM user INNER JOIN convo_users ON convo_users.id_user = user.id INNER JOIN convo ON convo.id = convo_users.id_convo INNER JOIN messages ON messages.id_convo = convo.id ; -->
+<!-- INSERT INTO messages (id_convo, id_user, content) VALUES(?, ?, ?); -->

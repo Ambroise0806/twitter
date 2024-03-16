@@ -1,5 +1,12 @@
+<?php
+session_start();
+include 'connexion.php';
+$con = new Connexion('twitter');
+include 'get_profile.php';
+?>
+
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -128,7 +135,7 @@
             <div class="mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/3">
                 <div class="px-4 py-2 bg-gray-200 rounded-t-lg dark:bg-gray-900">
                     <textarea id="newPost_container" name="newTweet" rows="4" class="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-900 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="What is happening !?" required /></textarea>
-                    <span id="newPost_length" class="w-full px-0 text-sm flex-end text-gray-900 bg-white border-0 dark:bg-gray-900 focus:ring-0 dark:text-gray-400 dark:placeholder-gray-400">140/140</span>
+                    <span id="newPost_length" class="w-full px-0 text-sm flex-end text-gray-900 bg-white border-0 focus:ring-0 dark:bg-gray-900 dark:text-white dark:placeholder-gray-400">140/140</span>
                     <span id="span" class="disabled w-full px-0 text-sm text-red-600 bg-white border-0 dark:bg-gray-900 focus:ring-0 dark:text-red-600 dark:placeholder-gray-400"></span>
                 </div>
                 <div class="flex ps-0 space-x-1 rtl:space-x-reverse sm:ps-2">
@@ -872,10 +879,10 @@
             </div>
 
             <button data-tooltip-target="tooltip-search" type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-                <a href="search.php">  
+                <a href="search.php">
                     <svg class="w-5 h-5 mb-1 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" id="iconSearch" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
-                    </a>
+                </a>
                 </svg>
                 <span class="sr-only">Search</span>
             </button>
@@ -924,10 +931,10 @@
                 <div class="tooltip-arrow" data-popper-arrow></div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>
+
 
 <?php
 include('tweet.php');

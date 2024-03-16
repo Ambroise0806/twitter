@@ -11,8 +11,8 @@ class Connexion
 
     public function __construct($db_name, $db_host = "127.0.0.1", $db_user = "aymeric", $db_pass = "V12345maj")
     {
-        $this->db_host = $db_host;
         $this->db_name = $db_name;
+        $this->db_host = $db_host;
         $this->db_user = $db_user;
         $this->db_pass = $db_pass;
     }
