@@ -12,13 +12,6 @@ if (isset($_SESSION['mail'])) {
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
     ?>
-        <div>
-            <h1>Welcome, <?php echo htmlspecialchars($user['username'] . ' ') ?> !;</h1>
-            <p>This is your informations</p>
-            <p>@Username: <?php echo htmlspecialchars($user['at_user_name']); ?></p>
-            <p>Email: <?php echo htmlspecialchars($user['mail']); ?></p>
-            <p>Birthdate: <?php echo htmlspecialchars($user['birthdate']); ?></p>
-        </div>
     <?php
     }else {
         echo "No user found.";
@@ -140,6 +133,7 @@ if (isset($_SESSION['mail'])) {
 
         <body>
             <div class="flex flex-wrap">
+                <img src="/uploads/<?php echo htmlspecialchars($user['banner']); ?>" alt="user banner">
                 <img class="w-16 h-16 m-4 rounded-full ring-2 ring-gray-400 dark:ring-gray-500" src="/uploads/<?php echo htmlspecialchars($user['profile_picture']); ?>" alt="user photo">
                 <button id="editProfile"  onclick="openEdit()" type="button" class="w-16 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  text-center dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-white dark:focus:ring-blue-800">Edit Profile</button>
             </div>
@@ -161,7 +155,7 @@ if (isset($_SESSION['mail'])) {
                     <input type="text" name="bio">
 
                     <label for="banner"><b>Banner</b></label>
-                    <input type="file" name="banner">
+                    <input type="file" name="banner" accept=".jpg, .jpeg, .png">
                     
                     <label for="password"><b>Password</b></label>
                     <input type="text" name="password">
@@ -211,9 +205,10 @@ if (isset($_SESSION['mail'])) {
                         if (!empty($_FILES['banner']['name'])) {
                             $banner = $_FILES['banner']['name'];
                             $banner_tmp = $_FILES['banner']['tmp_name'];
-                            move_uploaded_file($banner_tmp, "uploads/$banner"); 
+                            $banner_path = "/$banner";
+                            move_uploaded_file($banner_tmp, $banner_path); 
                             $updates[] = 'banner = :banner';
-                            $params[':banner'] = $banner;
+                            $params[':banner'] = $banner_path;
                         }
                         if (!empty($_POST['password'])) {
                             $updates[] = 'password = :password';
@@ -247,6 +242,12 @@ if (isset($_SESSION['mail'])) {
             </div>
             <div>
                 <?php echo htmlspecialchars($user['bio']) ?>
+            </div>
+            <div>
+                <?php echo htmlspecialchars($user['city']) ?>
+            </div>
+            <div>
+                <?php echo htmlspecialchars($user['birthdate']) ?>
             </div>
             <div class="flex flex-wrap">
                 <svg class="w-[24px] h-[24px] text-gray-800 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
