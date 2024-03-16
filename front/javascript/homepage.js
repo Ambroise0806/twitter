@@ -1,85 +1,98 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let newPost_container = document.getElementById('newPost_container')
-    let newPost_button = document.getElementById('newPost_button')
+    let newPost_container = document.getElementById("newPost_container");
+    let newPost_length = document.getElementById("newPost_length");
+    let newPost_button = document.getElementById("newPost_button");
+    let span = document.getElementById("span");
+    const maxNumChars = 140;
     let all_tweet = []
     let number_comments = []
     let number_retweet = []
-    if (newPost_button != null) {
-        newPost_button.addEventListener('click', CharTweet);
-    }
-    if (newPost_container != null) {
-        newPost_container.addEventListener('keyup', CharTweet)
-    }
-    
+    // if (newPost_button != null) {
+    //     newPost_button.addEventListener('click', CharTweet());
+    // }
+    // if (newPost_container != null) {
+    //     newPost_container.addEventListener('keyup', CharTweet())
+    // }
+
     load_tweet()
     getNum_comments()
     getNum_retweet()
 
-    function CharTweet() {
-        let tweetContentLength = newPost_container.textLength
-
-        if (tweetContentLength == 0) {
-            newPost_button.classList.add('disabled')
-        } else if (tweetContentLength > 140) {
-            alert("Votre tweet ne peut pas dépasser 140 charactères !")
-            newPost_button.classList.add('disabled')
+    function countCharacters() {
+        let numOfChars = newPost_container.value.length;
+        let count = maxNumChars - numOfChars;
+        newPost_length.textContent = count + "/140";
+        
+        if (count < 0) {
+            newPost_length.style.color = "red";
+        } else if (count < 20) {
+            newPost_length.style.color = "orange";
         } else {
-            newPost_button.classList.remove('disabled')
+            newPost_length.style.color = "gray";
+        }
+        if (numOfChars === 0) {
+            newPost_button.classList.add("disabled");
+        } else if (numOfChars > 140) {
+            span.textContent = "Your tweet cannot exceed 140 characters !";
+            newPost_button.classList.add("disabled");
+        } else {
+            newPost_button.classList.remove("disabled");
+        }
+    };
+
+        newPost_container.addEventListener("keyup", countCharacters);
+
+function load_tweet() {
+    const xhttp = new XMLHttpRequest()
+    xhttp.open("GET", "controller/getTweet.php", false)
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            all_tweet = JSON.parse(this.responseText);
+            let i = 0
+            all_tweet.forEach(element => {
+                if (element[6] == null) {
+                    createTweet(element, i)
+                    i++
+                }
+            });
         }
     }
+    xhttp.send()
+}
 
-
-    function load_tweet() {
-        const xhttp = new XMLHttpRequest()
-        xhttp.open("GET", "controller/getTweet.php", false)
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                all_tweet = JSON.parse(this.responseText);
-                let i = 0
-                all_tweet.forEach(element => {
-                    if (element[6] == null) {
-                        createTweet(element, i)
-                        i++
-                    }
-                });
-            }
+function getNum_comments() {
+    const xhttp = new XMLHttpRequest()
+    xhttp.open("GET", "././controller/getNum_Comms.php", false)
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            number_comments = JSON.parse(this.responseText);
         }
-        xhttp.send()
     }
-    
-    function getNum_comments() {
-        const xhttp = new XMLHttpRequest()
-        xhttp.open("GET", "././controller/getNum_Comms.php", false)
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                number_comments = JSON.parse(this.responseText);
-            }
-        }
-        xhttp.send()
-        number_comments.forEach(element => {
-            document.getElementById('tweet_id_'+element[0]).childNodes[1].childNodes[13].childNodes[1].childNodes[3].innerHTML = element[1]
-            
-        });
+    xhttp.send()
+    number_comments.forEach(element => {
+        document.getElementById('tweet_id_' + element[0]).childNodes[1].childNodes[13].childNodes[1].childNodes[3].innerHTML = element[1]
+
+    });
 }
 
-    function getNum_retweet() {
-        const xhttp = new XMLHttpRequest()
-        xhttp.open("GET", "././controller/getNum_rt.php", false)
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                number_retweet = JSON.parse(this.responseText);
-            }
+function getNum_retweet() {
+    const xhttp = new XMLHttpRequest()
+    xhttp.open("GET", "././controller/getNum_rt.php", false)
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            number_retweet = JSON.parse(this.responseText);
         }
-        xhttp.send()
-        number_retweet.forEach(element => {
-            document.getElementById('tweet_id_'+element[0]).childNodes[1].childNodes[13].childNodes[1].childNodes[7].innerHTML = element[1]
-            
-        });
+    }
+    xhttp.send()
+    number_retweet.forEach(element => {
+        document.getElementById('tweet_id_' + element[0]).childNodes[1].childNodes[13].childNodes[1].childNodes[7].innerHTML = element[1]
+
+    });
 }
 
-    function createTweet(element, i) {
-        let main = document.getElementById('tweet')
-        const tweet = $(`<div class="flex flex-col">
+function createTweet(element, i) {
+    let main = document.getElementById('tweet')
+    const tweet = $(`<div class="flex flex-col">
         <div id="tweet_id_`+ element[0] + `" class="h-auto w-auto p-4 m-4 rounded-lg bg-gray-50 dark:bg-gray-900 dark:text-white">
         <div class="flex flex-wrap w-auto items-center">
         <img src="assets/pp_nav.jpg" class="w-12 h-12 rounded-full" alt="Profil's Icon">
@@ -146,34 +159,34 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
         </div>
         <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">`)[0]
-        main.appendChild(tweet)
-        appendContent(element, i)
-    }
+    main.appendChild(tweet)
+    appendContent(element, i)
+}
 
-    function appendContent(element, i) {
-        let content_response = element[4]
-        let p = document.getElementById('content' + i)
-        let regexHashtag = /\#(.*?)(\s|$)/g
-        let array_hashtag = content_response.match(regexHashtag)
-        p.innerHTML = ""
-        if (array_hashtag !== null) {
-            array_hashtag.forEach(hashtag => {
-                const params = new URLSearchParams({
-                    hashtag: hashtag.trim(),
-                })
-                content_response = content_response.replace(hashtag, '<a href="search.php?' + params + '" id="hashtag_link" style="color: skyblue">' + hashtag + '</a> ');
-            });
-        }
-        let regexAt = /\@(.*?)(\s|$)/g
-        let array_at = content_response.match(regexAt)
-        if (array_at !== null) {
-            array_at.forEach(at => {
-                const params = new URLSearchParams({
-                    at: at.trim(),
-                })
-                content_response = content_response.replace(at, '<a href="profile.php?' + params + '" id="at_username_link" style="color: skyblue">' + at + '</a> ');
-            });
-        }
-        p.innerHTML = content_response
+function appendContent(element, i) {
+    let content_response = element[4]
+    let p = document.getElementById('content' + i)
+    let regexHashtag = /\#(.*?)(\s|$)/g
+    let array_hashtag = content_response.match(regexHashtag)
+    p.innerHTML = ""
+    if (array_hashtag !== null) {
+        array_hashtag.forEach(hashtag => {
+            const params = new URLSearchParams({
+                hashtag: hashtag.trim(),
+            })
+            content_response = content_response.replace(hashtag, '<a href="search.php?' + params + '" id="hashtag_link" style="color: skyblue">' + hashtag + '</a> ');
+        });
     }
+    let regexAt = /\@(.*?)(\s|$)/g
+    let array_at = content_response.match(regexAt)
+    if (array_at !== null) {
+        array_at.forEach(at => {
+            const params = new URLSearchParams({
+                at: at.trim(),
+            })
+            content_response = content_response.replace(at, '<a href="profile.php?' + params + '" id="at_username_link" style="color: skyblue">' + at + '</a> ');
+        });
+    }
+    p.innerHTML = content_response
+}
 });

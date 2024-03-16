@@ -1,3 +1,19 @@
+<?php
+session_start();
+include './back/connexion.php';
+$con = new Connexion('twitter');
+
+if (isset ($_SESSION['mail'])) {
+    $userMail = $_SESSION['mail'];
+    $sql = "SELECT * FROM user WHERE mail = :email";
+    $statement = $con->getPDO()->prepare($sql);
+    $statement->bindParam(':email', $userMail);
+    $statement->execute();
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
+} else {
+    echo "No user found.";
+}
+?>
 <!DOCTYPE html>
 <html lang="en" class="dark">
 
@@ -167,13 +183,16 @@
 
         <!-- Ajouter un tweet au fil -->
         <form action="" autocomplete="off" method="POST">
-            <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+            <div
+                class="mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/3">
                 <div class="px-4 py-2 bg-gray-200 rounded-t-lg dark:bg-gray-900">
-                    <div class="autocomplete">
-                        <input name="newTweet" id="newPost_container" rows="4"
-                            class="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-900 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-                            placeholder="What is happening !?" required /></textarea>
-                    </div>
+                    <input name="newTweet" id="newPost_container" rows="4"
+                        class="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-900 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                        placeholder="What is happening !?" required />
+                    <span id="newPost_length"
+                        class="w-full px-0 text-sm flex-end text-gray-900 bg-white border-0 focus:ring-0 dark:bg-gray-900 dark:text-white dark:placeholder-gray-400">140/140</span>
+                    <span id="span"
+                        class="disabled w-full px-0 text-sm text-red-600 bg-white border-0 dark:bg-gray-900 focus:ring-0 dark:text-red-600 dark:placeholder-gray-400"></span>
                 </div>
                 <div class="flex ps-0 space-x-1 rtl:space-x-reverse sm:ps-2">
                     <button type="button"
@@ -221,11 +240,11 @@
     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
     <div
-        class="fixed z-50 w-full h-16 max-w-lg -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600">
+        class="fixed z-50 w-full h-16 max-w-lg -translate-x-1/2 bg-white border border-gray-200 bottom-0 left-1/2 dark:bg-gray-700 dark:border-gray-600">
         <div class="grid h-full max-w-lg grid-cols-5 mx-auto">
             <button data-tooltip-target="tooltip-home" type="button"
                 class="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
-                <a href="./homepage.php">
+                <a href="homepage.php">
                     <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -242,7 +261,7 @@
 
             <button data-tooltip-target="tooltip-search" type="button"
                 class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-                <a href="./search.php">
+                <a href="search.php">
                     <svg class="w-5 h-5 mb-1 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
                         id="iconSearch" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 24 24">
@@ -277,9 +296,8 @@
 
             <button data-tooltip-target="tooltip-inbox" type="button"
                 class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-                <a href="./inbox.php">
-                    <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
-                        aria-hidden="
+                <a href="inbox.php">
+                    <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"" aria-hidden="
                         true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
                             d="m3.5 5.5 7.9 6c.4.3.8.3 1.2 0l7.9-6M4 19h16c.6 0 1-.4 1-1V6c0-.6-.4-1-1-1H4a1 1 0 0 0-1 1v12c0 .6.4 1 1 1Z" />
@@ -296,7 +314,7 @@
 
             <button data-tooltip-target="tooltip-profile" type="button"
                 class="inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
-                <a href="./profile.php">
+                <a href="profile.php">
                     <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -311,7 +329,6 @@
                 <div class="tooltip-arrow" data-popper-arrow></div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>
@@ -321,14 +338,14 @@ if (isset ($_POST["comment"]) && isset ($_POST["id_response"])) {
     $id_response = $_POST["id_response"];
     include ('./back/comms.php');
     $db = new Comments('twitter');
-    $db->addComment_db(2, $newComment, $id_response);
+    $db->addComment_db($user['id'], $newComment, $id_response);
 }
 
 if (isset ($_POST['newTweet'])) {
     $newTweet = $_POST['newTweet'];
     include ('./back/addTweet_db.php');
     $db = new addTweet('twitter');
-    $db->addNewTweet(1, $newTweet);
+    $db->addNewTweet($user['id'], $newTweet);
 }
 
 if (isset ($_POST['comment_rt']) && isset ($_POST["id_quoted_tweet"])) {
@@ -336,6 +353,6 @@ if (isset ($_POST['comment_rt']) && isset ($_POST["id_quoted_tweet"])) {
     $id_quoted_tweet = $_POST['id_quoted_tweet'];
     include ('./back/retweet.php');
     $db = new Retweet('twitter');
-    $db->addRetweet_db(1, $comment_rt, $id_quoted_tweet);
+    $db->addRetweet_db($user['id'], $comment_rt, $id_quoted_tweet);
 }
 ?>

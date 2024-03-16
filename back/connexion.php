@@ -17,7 +17,7 @@ class Connexion
         $this->db_pass = $db_pass;
     }
 
-    private function getPDO()
+    function getPDO()
     {
         if ($this->pdo === NULL) {
             try {
@@ -25,7 +25,7 @@ class Connexion
                 $this->pdo = new PDO($dsn, $this->db_user, $this->db_pass);
                 $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
-                throw new InvalidArgumentException("Database error: " . $e->getMessage());
+                throw new InvalidArgumentException("Datapdo error: " . $e->getMessage());
 
             }
         }
@@ -34,11 +34,10 @@ class Connexion
 
     
     function register($nom, $pseudo, $email, $mdp, $jour, $mois, $annee) {
+        session_start();
         $date = "$annee-$mois-$jour";
         if ($nom != "" && $pseudo != "" && $email != "" && $mdp != "" && $date != "") {
             $hash = hash('ripemd160', $this->salt . $mdp);
-            $pp = "flemme";
-            $banner = "reflemme";
             try {
                 $con = $this->getPDO()->prepare("INSERT INTO user (username, at_user_name, profile_picture, banner, mail, password, birthdate) VALUES (:nom, :pseudo,'flemme', 'reflemme', :email, :mdp, :date)");
                 $con->bindParam(':nom', $nom);
@@ -47,15 +46,9 @@ class Connexion
                 $con->bindParam(':mdp', $hash);
                 $con->bindParam(':date', $date);
                 $con->execute();
-                session_start();
-                $_SESSION['username'] = $nom;
-                $_SESSION['at_user_name'] = $pseudo;
-                $_SESSION['profile_picture'] = $pp;
-                $_SESSION['banner'] = $banner;
-                $_SESSION['mail'] = $email;
-                $_SESSION['password'] = $hash;
-                $_SESSION['birthdate'] = $date;
+                $_SESSION['email'] = $email;
                 header("Location: profile.php");
+                exit();
             } catch (Exception $e) {
                 echo "Erreur lors de l'insertion de l'utilisateur : " . $e->getMessage();
             }
@@ -73,15 +66,9 @@ class Connexion
                 if ($user) {
                     if ($hash === $user['password']) {
                         session_start();
-                        // $_SESSION['username'] = $nom;
-                        // $_SESSION['at_user_name'] = $pseudo;
-                        // $_SESSION['profile_picture'] = $pp;
-                        // $_SESSION['banner'] = $banner;
-                        // $_SESSION['mail'] = $email;
-                        // $_SESSION['password'] = $hash;
-                        // $_SESSION['birthdate'] = $date;
+                        $_SESSION['mail'] = $user['mail'];
                         header("Location: profile.php");
-                        exit();
+                        // exit();
                     } else {
                         echo 'Mot de passe incorrect.';
                     }
@@ -92,5 +79,5 @@ class Connexion
                 echo "Erreur lors de la connexion : " . $e->getMessage();
             }
         }
-    } 
+    }
 }

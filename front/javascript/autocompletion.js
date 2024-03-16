@@ -61,7 +61,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
             } else {
-                document.getElementById('newPost_containerautocomplete-list').remove()
+                if(document.getElementById('newPost_containerautocomplete-list')!=null){
+                    document.getElementById('newPost_containerautocomplete-list').remove()
+                }
             }
         });
         function closeAllLists() {
