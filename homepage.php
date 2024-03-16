@@ -14,6 +14,7 @@
     <script src="front/javascript/light_mode.js"></script>
     <script src="front/javascript/autocompletion.js"></script>
     <script src="front/javascript/comms.js"></script>
+    <script src="front/javascript/retweet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <title>Twitter</title>
 </head>
@@ -328,5 +329,13 @@ if (isset ($_POST['newTweet'])) {
     include ('./back/addTweet_db.php');
     $db = new addTweet('twitter');
     $db->addNewTweet(1, $newTweet);
+}
+
+if (isset ($_POST['comment_rt']) && isset ($_POST["id_quoted_tweet"])) {
+    $comment_rt = $_POST['comment_rt'];
+    $id_quoted_tweet = $_POST['id_quoted_tweet'];
+    include ('./back/retweet.php');
+    $db = new Retweet('twitter');
+    $db->addRetweet_db(1, $comment_rt, $id_quoted_tweet);
 }
 ?>

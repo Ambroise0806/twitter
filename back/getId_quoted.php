@@ -1,12 +1,11 @@
 <?php
-class Tweet
+class Retweet
 {
     private $db_host;
     private $db_user;
     private $db_pass;
     private $db_name;
     private $pdo;
-
     public function __construct($db_name, $db_host = "localhost", $db_user = "guillaume", $db_pass = "Loulou97133")
     {
         $this->db_host = $db_host;
@@ -29,10 +28,10 @@ class Tweet
         }
         return $this->pdo;
     }
-    public function getTweet()
+    public function getId_quoted()
     {
         try {
-            $sql = "SELECT tweet.id, username, at_user_name, time, content, profile_picture, id_response, id_quoted_tweet FROM tweet INNER JOIN user ON tweet.id_user = user.id ORDER BY tweet.id DESC;";
+            $sql = "SELECT tweet.id, username, at_user_name, time, content, profile_picture, id_quoted_tweet FROM tweet INNER JOIN user ON tweet.id_user = user.id ORDER BY tweet.id DESC;";
             $statement = $this->getPDO()->prepare($sql);
             $statement->execute();
             $result = $statement->fetchAll();

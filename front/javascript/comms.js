@@ -2,17 +2,14 @@ $(document).ready(function () {
     let response = []
     createModal()
     let button_comms = document.querySelectorAll('#comms')
-    let button_rt = document.querySelectorAll('#retweet')
     let myModal = document.getElementById('myLoginModal')
     let closeModal = document.getElementById('closeLoginModal')
     let path_comms = document.querySelectorAll('#path_comms')
-    let path_retweet = document.querySelectorAll('#path_retweet')
     let input_response = document.getElementById('input_response')
     let button_show_comms = document.querySelectorAll('#show_comms')
-    let comms_already_shown = false
     load_comments();
     displayComments(response)
-
+    
     for (let i = 0; i < button_comms.length; i++) {
         button_comms[i].addEventListener('click', function () {
             path_comms[i].setAttribute('stroke', '#1DA1F2')
@@ -20,11 +17,8 @@ $(document).ready(function () {
             input_response.value = id_response
             myModal.classList.remove('hidden');
         })
-
-        button_rt[i].addEventListener('click', function () {
-            path_retweet[i].setAttribute('stroke', 'lightgreen')
-        })
-
+        
+        let comms_already_shown = false
         button_show_comms[i].addEventListener('click', () => {
             let comms_to_show = button_comms[i].getAttribute('class')
             let comms = document.querySelectorAll('#comment' + comms_to_show)

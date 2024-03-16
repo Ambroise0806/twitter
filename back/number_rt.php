@@ -1,6 +1,7 @@
 <?php
-class Tweet
+class Number_rt
 {
+
     private $db_host;
     private $db_user;
     private $db_pass;
@@ -29,10 +30,10 @@ class Tweet
         }
         return $this->pdo;
     }
-    public function getTweet()
+    public function getNum_rt()
     {
         try {
-            $sql = "SELECT tweet.id, username, at_user_name, time, content, profile_picture, id_response, id_quoted_tweet FROM tweet INNER JOIN user ON tweet.id_user = user.id ORDER BY tweet.id DESC;";
+            $sql = "SELECT id, COUNT(id_quoted_tweet) FROM tweet WHERE id_quoted_tweet > 0 GROUP BY id;";
             $statement = $this->getPDO()->prepare($sql);
             $statement->execute();
             $result = $statement->fetchAll();

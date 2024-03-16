@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     let newPost_container = document.getElementById('newPost_container')
     let newPost_button = document.getElementById('newPost_button')
-    let response = []
-    let response2 = []
+    let all_tweet = []
+    let number_comments = []
+    let number_retweet = []
     if (newPost_button != null) {
         newPost_button.addEventListener('click', CharTweet);
     }
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     load_tweet()
     getNum_comments()
+    getNum_retweet()
 
     function CharTweet() {
         let tweetContentLength = newPost_container.textLength
@@ -32,9 +34,9 @@ document.addEventListener('DOMContentLoaded', function () {
         xhttp.open("GET", "controller/getTweet.php", false)
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                response = JSON.parse(this.responseText);
+                all_tweet = JSON.parse(this.responseText);
                 let i = 0
-                response.forEach(element => {
+                all_tweet.forEach(element => {
                     if (element[6] == null) {
                         createTweet(element, i)
                         i++
@@ -50,18 +52,34 @@ document.addEventListener('DOMContentLoaded', function () {
         xhttp.open("GET", "././controller/getNum_Comms.php", false)
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                response2 = JSON.parse(this.responseText);
+                number_comments = JSON.parse(this.responseText);
             }
         }
         xhttp.send()
-        response2.forEach(element => {
+        number_comments.forEach(element => {
             document.getElementById('tweet_id_'+element[0]).childNodes[1].childNodes[13].childNodes[1].childNodes[3].innerHTML = element[1]
+            
+        });
+}
+
+    function getNum_retweet() {
+        const xhttp = new XMLHttpRequest()
+        xhttp.open("GET", "././controller/getNum_rt.php", false)
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                number_retweet = JSON.parse(this.responseText);
+            }
+        }
+        xhttp.send()
+        number_retweet.forEach(element => {
+            document.getElementById('tweet_id_'+element[0]).childNodes[1].childNodes[13].childNodes[1].childNodes[7].innerHTML = element[1]
+            
         });
 }
 
     function createTweet(element, i) {
         let main = document.getElementById('tweet')
-        const tweet = $(`<div id="show_comms" class="flex flex-col">
+        const tweet = $(`<div class="flex flex-col">
         <div id="tweet_id_`+ element[0] + `" class="h-auto w-auto p-4 m-4 rounded-lg bg-gray-50 dark:bg-gray-900 dark:text-white">
         <div class="flex flex-wrap w-auto items-center">
         <img src="assets/pp_nav.jpg" class="w-12 h-12 rounded-full" alt="Profil's Icon">
@@ -98,13 +116,13 @@ document.addEventListener('DOMContentLoaded', function () {
         <path id="path_comms" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 10.5h0m-4 0h0m-4 0h0M5 5h14c.6 0 1 .4 1 1v9c0 .6-.4 1-1 1h-6.6a1 1 0 0 0-.7.3L8.8 19c-.3.3-.8 0-.8-.4V17c0-.6-.4-1-1-1H5a1 1 0 0 1-1-1V6c0-.6.4-1 1-1Z"/>
         </svg>
         </li>
-        <li class="text-gray-600 font-medium text-sm dark:text-gray-500">0</li>
+        <li id="show_comms" class="text-gray-600 font-medium text-sm dark:text-gray-500">0</li>
         <li id="retweet" class="`+ element[0] + `">
         <svg class="w-6 h-6 text-gray-400 text-sm  dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <path id="path_retweet" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3"/>
         </svg>
         </li>
-        <li class="text-gray-600 font-medium text-sm dark:text-gray-500">0</li>
+        <li id="show_rt" class="text-gray-600 font-medium text-sm dark:text-gray-500">0</li>
         <li>
         <svg class="w-6 h-6 text-gray-400 text-sm  dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z"/>
