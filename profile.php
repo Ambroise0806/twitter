@@ -28,7 +28,7 @@ if (isset($_SESSION['mail'])) {
 // exit();
 // }
 
-session_destroy();
+
 // $stmt = $pdo->query("SELECT COUNT(*) FROM follow WHERE id_user LIKE id_follow");
 //  $stmt = $pdo->query("SELECT COUNT(*) FROM follow WHERE id_follow LIKE id_user");
 // }else{
@@ -140,12 +140,12 @@ session_destroy();
 
         <body>
             <div class="flex flex-wrap">
-                <img class="w-16 h-16 m-4 rounded-full ring-2 ring-gray-400 dark:ring-gray-500" src="<?php echo htmlspecialchars($user['profile_picture'] . ' ')?>" alt="user photo">
+                <img class="w-16 h-16 m-4 rounded-full ring-2 ring-gray-400 dark:ring-gray-500" src="/uploads/<?php echo htmlspecialchars($user['profile_picture']); ?>" alt="user photo">
                 <button id="editProfile"  onclick="openEdit()" type="button" class="w-16 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  text-center dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-white dark:focus:ring-blue-800">Edit Profile</button>
             </div>
             <!-- Edit your profile form  -->
             <div class="edit-popup" id="editMyProfile">
-                <form action="" class="form-container" method="post">
+                <form action="" class="form-container" method="post" enctype="multipart/form-data">
                     <h1>Edit your profile</h1>
                     
                     <label for="username"><b>Username</b></label>
@@ -155,7 +155,7 @@ session_destroy();
                     <input type="text" name="at_user_name">
 
                     <label for="profile_picture"><b>Profile Pic</b></label>
-                    <input type="file" name="profile_picture">
+                    <input type="file" name="profile_picture" accept=".jpg, .jpeg, .png">
 
                     <label for="bio"><b>Biography</b></label>
                     <input type="text" name="bio">
@@ -163,43 +163,90 @@ session_destroy();
                     <label for="banner"><b>Banner</b></label>
                     <input type="file" name="banner">
                     
-                    <label for="mail"><b>Email</b></label>
-                    <input type="text" name="mail">
-
                     <label for="password"><b>Password</b></label>
                     <input type="text" name="password">
 
-                    <label for="birthdate"><b>Birthdate</b></label>
-                    <input type="date" name="birthdate">
-
-                    <input type="radio" id="private" name="privacy" value="true">
+                    <input type="radio" id="private" name="private" value="true">
                     <label for="private">Private Account</label>
-                    <input type="radio" id="public" name="privacy" vlaue="false">
+                    <input type="radio" id="public" name="private" value="false">
                     <label for="public">Public Account</label>
 
                     <label for="city"><b>City</b></label>
                     <input type="text" name="city">
 
-                    <button type="submit" class="btn">Save changes</button>
+                    <button type="submit" class="editbtn" name="edit" id="saveEdit">Save changes</button>
                     <button type="button" class="cancel-btn" id="closeEdit" onclick="closeEdit()">Close</button>
             </div>
-
-            <?php
-                function updateProfile($username, $at_user_name, $profile_pic, $bio, $banner, $mail, $password, $birthdate, $private, $city) {
-                    $con = new Connexion('twitter');
-                    $sql = "UPDATE user SET username='$username', at_user_name='$at_user_name', profile_picture='$profile_pic', bio='$bio', banner='$banner', password='$password', birthdate='$birthdate', private='$private', city='$city' WHERE id= :id";
-                    $statement = $con->getPDO()->prepare($sql);
-                    $statement->bindParam(':id', $id_user);
-                    $statement->execute();
-                    $user = $statement->fetch(PDO::FETCH_ASSOC);
-                }
-            ?>
             <script src="editProfile.js"></script>
+            <?php
+                //session_start();
+                //include 'connexion.php';
+                //$con = new Connexion('twitter');
+                    if (isset($_POST['edit'])) {
+                        $userMail = $_SESSION['mail'];
+                        $updates = array();
+                        $params = array(':email' => $userMail);
+
+                        if(!empty($_POST['username'])) {
+                            $updates[] = 'username = :username';
+                            $param[':username'] = $_POST['username'];
+                        }
+                        if (!empty($_POST['at_user_name'])) {
+                            $at_user_name = '@' . $_POST['at_user_name'];
+                            $updates[] = 'at_user_name = :at_user_name';
+                            $params[':at_user_name'] = $at_user_name;
+                        }
+                        if (!empty($_FILES['profile_picture']['name'])) {
+                            $profile_pic = $_FILES['profile_picture']['name'];
+                            $profile_pic_tmp = $_FILES['profile_picture']['tmp_name'];
+                            $profile_pic_path = "/$profile_pic";
+                            move_uploaded_file($profile_pic_tmp, $profile_pic_path); 
+                            $updates[] = 'profile_picture = :profile_picture';
+                            $params[':profile_picture'] = $profile_pic_path;
+                        }
+                        if (!empty($_POST['bio'])) {
+                            $updates[] = 'bio = :bio';
+                            $params[':bio'] = $_POST['bio'];
+                        }
+                        if (!empty($_FILES['banner']['name'])) {
+                            $banner = $_FILES['banner']['name'];
+                            $banner_tmp = $_FILES['banner']['tmp_name'];
+                            move_uploaded_file($banner_tmp, "uploads/$banner"); 
+                            $updates[] = 'banner = :banner';
+                            $params[':banner'] = $banner;
+                        }
+                        if (!empty($_POST['password'])) {
+                            $updates[] = 'password = :password';
+                            $params[':password'] = $_POST['password'];
+                        }
+                        if (!empty($_POST['privacy'])) {
+                            $updates[] = 'private = :private';
+                            $params[':private'] = $_POST['private'];
+                        }
+                        if (!empty($_POST['city'])) {
+                            $updates[] = 'city = :city';
+                            $params[':city'] = $_POST['city'];
+                        }
+                        $sql = "UPDATE user SET " . implode(', ', $updates) . " WHERE mail = :email";
+                        $update = $con->getPDO()->prepare($sql);
+                        $update->execute($params);                   
+                        
+                        if ($update) {
+                            echo "Congrats! Your profile is up to date.";
+                        } else {
+                            echo "Sorry, we weren't able to update your profile.";
+                        }
+                    }
+            ?>
+            
             <div class="text-gray-900 font-bold text-lg dark:text-white">
                 <?php echo htmlspecialchars($user['username'] . ' ') ?> 
             </div>
             <div class="text-gray-600 dark:text-gray-500">
                 <?php echo htmlspecialchars($user['at_user_name'] . ' ') ?>
+            </div>
+            <div>
+                <?php echo htmlspecialchars($user['bio']) ?>
             </div>
             <div class="flex flex-wrap">
                 <svg class="w-[24px] h-[24px] text-gray-800 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -216,10 +263,10 @@ session_destroy();
                 5 Following
                 100 Followers
                     <?php /*ici ma puce*/ 
-                    $con = $this->getPDO()->prepare("SELECT at_user_name, COUNT(id_user) FROM user INNER JOIN follow ON user.id = follow.id WHERE id_follow = :at_user_name");
-                    $con->execute();
-                    $follower = $con->fetch(PDO::FETCH_ASSOC);
-                    echo $follower;
+                    //$con = $this->getPDO()->prepare("SELECT at_user_name, COUNT(id_user) FROM user INNER JOIN follow ON user.id = follow.id WHERE id_follow = :at_user_name");
+                    //$con->execute();
+                    //$follower = $con->fetch(PDO::FETCH_ASSOC);
+                    //echo $follower;
                     ?>
             </div>
 
