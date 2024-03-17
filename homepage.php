@@ -99,7 +99,7 @@ if (isset ($_SESSION['mail'])) {
     </nav>
 
     <aside id="logo-sidebar"
-        class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full xl:translate-x-0"
         aria-label="Sidebar">
         <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-900">
             <a href="homepage.php" class="flex items-center ps-2.5 mb-5">
@@ -236,7 +236,7 @@ if (isset ($_SESSION['mail'])) {
 
         <!-- fil d'actualite -->
         <main id="tweet"></main>
-    </main>
+    
     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
     <div

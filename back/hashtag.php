@@ -9,7 +9,7 @@ class Hashtag
     private $db_name;
     private $pdo;
 
-    public function __construct($db_name, $db_host = "127.0.0.1", $db_user = "aymeric", $db_pass = "V1345maj")
+    public function __construct($db_name, $db_host = "127.0.0.1", $db_user = "aymeric", $db_pass = "V12345maj")
     {
         $this->db_host = $db_host;
         $this->db_name = $db_name;

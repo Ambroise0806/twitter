@@ -92,8 +92,8 @@ function getNum_retweet() {
 
 function createTweet(element, i) {
     let main = document.getElementById('tweet')
-    const tweet = $(`<div class="flex flex-col">
-        <div id="tweet_id_`+ element[0] + `" class="h-auto w-auto p-4 m-4 rounded-lg bg-gray-50 dark:bg-gray-900 dark:text-white">
+    const tweet = $(`<div class="flex flex-col sm:flex-row space-y-4 sm:space-x-4 md:space-x-6 lg:space-x-8 xl:space-x-10">
+        <div id="tweet_id_`+ element[0] + `" class="h-auto w-auto sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4 m-4 rounded-lg bg-gray-50 dark:bg-gray-900 dark:text-white">
         <div class="flex flex-wrap w-auto items-center">
         <img src="assets/pp_nav.jpg" class="w-12 h-12 rounded-full" alt="Profil's Icon">
         <h1 id="username0" class="flex flex-col font-bold m-2">`+ element[1] + `</h1>
