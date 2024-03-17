@@ -23,8 +23,9 @@ if (isset($_SESSION['mail'])) {
     <link rel="stylesheet" href="front/css/output.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="front/css/profile.css">
+    <!-- <link rel="stylesheet" href="front/css/profile.css"> -->
     <script src="front/javascript/editProfile.js"></script>
+    <script src="front/javascript/light_mode.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <title>Twitter</title>
 </head>
@@ -118,43 +119,108 @@ if (isset($_SESSION['mail'])) {
                 <img src="/uploads/<?php echo htmlspecialchars($user['banner']); ?>" alt="user banner">
                 <img class="w-16 h-16 m-4 rounded-full ring-2 ring-gray-400 dark:ring-gray-500"
                     src="/uploads/<?php echo htmlspecialchars($user['profile_picture']); ?>" alt="user photo">
-                <button id="editProfile" onclick="openEdit()" type="button"
-                    class="w-16 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  text-center dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-white dark:focus:ring-blue-800">Edit
-                    Profile</button>
+                </div>
+    <!-- Modal toggle -->
+            <button id="editProfile"
+                    class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    type="button">
+                    Edit Profile
+            </button>
+            <!-- <div class="edit-popup" id="editMyProfile"> -->
+            <div id="myProfileModal" tabindex="-1" aria-hidden="true"
+                class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div class="relative p-4 w-full max-w-md max-h-full">
+                    <!-- Modal content -->
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <!-- Modal header -->
+                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                Edit your profile
+                            </h3>
+                                <button type="button" id="closeProfileModal"
+                                    class="end-2.5 text-red-400 bg-transparent hover:bg-gray-200 hover:text-red-400 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                    </svg>
+                                <span class="sr-only">Close modal</span>
+                                </button>
+                            </div>
+                                <!-- Modal body -->
+                <div class="p-4 md:p-5">
+                    <form action="" class="form-container space-y-4" method="POST" enctype="multipart/form-data">
+                        <div>
+                        <label for="username"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <b>Username</b></label>
+                        <input type="text" name="username"
+                            class="bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white">
+                        </div>
+                        <div>
+                        <label for="at_user_name"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        <b>@ Username</b></label>
+                        <input type="text" name="at_user_name"
+                            class="bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white">
+                        </div>
+                        <div>
+                        <label for="profile_picture"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> 
+                            <b>Profile Pic</b></label>
+                        <input type="file"
+                            class="bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white"
+                            name="profile_picture" accept=".jpg, .jpeg, .png">
+                        </div>
+                        <div>
+                        <label for="bio"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <b>Biography</b></label>
+                        <input type="text" name="bio"
+                            class="bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white">
+                        </div>
+                        <div>
+                        <label for="banner"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <b>Banner</b></label>
+                        <input type="file" name="banner" accept=".jpg, .jpeg, .png"
+                            class="bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white">
+                        </div>
+                        <div>
+                        <label for="password"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            <b>Password</b></label>
+                        <input type="text" name="password"
+                            class="bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white">
+                        </div>
+                    <div class="flex flex-row space-x-4">
+                        <input type="radio" id="private" name="private" value="true">
+                        <label for="private"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            Private Account
+                        </label>
+                        <input type="radio" id="public" name="private" value="false">                        
+                        <label for="public"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            Public Account
+                    </label>
+                    </div>
+                    <div>
+                        <label for="city"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        <b>Your City</b></label>
+                        <input type="text" name="city"
+                        class="bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white">
+                    </div>
+                    <div class="flex flex-row">
+                        <button type="submit" class="editbtn focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" name="edit" id="saveEdit">Save changes</button>
+                        <button type="button" class="cancel-btn focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" id="closeEdit">Close</button>
+                    </div>
+                </form>
             </div>
-            <div class="edit-popup" id="editMyProfile">
-                <form action="" class="form-container" method="post" enctype="multipart/form-data">
-                    <h1>Edit your profile</h1>
-
-                    <label for="username"><b>Username</b></label>
-                    <input type="text" name="username">
-
-                    <label for="at_user_name"><b>@ Username</b></label>
-                    <input type="text" name="at_user_name">
-
-                    <label for="profile_picture"><b>Profile Pic</b></label>
-                    <input type="file" name="profile_picture" accept=".jpg, .jpeg, .png">
-
-                    <label for="bio"><b>Biography</b></label>
-                    <input type="text" name="bio">
-
-                    <label for="banner"><b>Banner</b></label>
-                    <input type="file" name="banner" accept=".jpg, .jpeg, .png">
-
-                    <label for="password"><b>Password</b></label>
-                    <input type="text" name="password">
-
-                    <input type="radio" id="private" name="private" value="true">
-                    <label for="private">Private Account</label>
-                    <input type="radio" id="public" name="private" value="false">
-                    <label for="public">Public Account</label>
-
-                    <label for="city"><b>City</b></label>
-                    <input type="text" name="city">
-
-                    <button type="submit" class="editbtn" name="edit" id="saveEdit">Save changes</button>
-                    <button type="button" class="cancel-btn" id="closeEdit" onclick="closeEdit()">Close</button>
-            </div>
+        </div>
+    </div>
+</div>
+            
             <?php
             if (isset ($_POST['edit'])) {
                 $userMail = $_SESSION['mail'];

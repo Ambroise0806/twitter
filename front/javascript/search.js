@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const queryString = window.location.search;
     const searchParams = new URLSearchParams(queryString);
     let searched_hashtag = searchParams.get("hashtag")
-    let input = document.getElementById('search')
+    let input = document.getElementById('newPost_container')
     input.value = searched_hashtag
     let tmp;
     let tmp0;
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     getTweet_withHashtag();
 
-    let tweet_byHashtag = []
+    let tweet_byHashtag = []   
     function getTweet_byHashtag(tmp) {
         for (let i = 0; i < tmp.length; i++) {
             if (tmp[i]['hashtag'].trim() == input.value) {

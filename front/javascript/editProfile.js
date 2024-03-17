@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
     let editProfile = document.getElementById("editProfile");
-    let closeEdit = document.getElementById("closeEdit");
+    let myProfileModal = document.getElementById("myProfileModal")
+    let closeEdit = document.getElementById("closeProfileModal");
 
-    editProfile.addEventListener("click", function openEdit() {
-        document.getElementById("editMyProfile").style.display = "flex";
+    editProfile.addEventListener('click', function () {
+        myProfileModal.classList.remove('hidden');
     })
 
-    closeEdit.addEventListener("click", function closeEdit() {
-        document.getElementById("editMyProfile").style.display = "none";
+    closeEdit.addEventListener('click', function () {
+        myProfileModal.classList.add('hidden');
     })
 })

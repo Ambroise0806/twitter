@@ -7,12 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let all_tweet = []
     let number_comments = []
     let number_retweet = []
-    // if (newPost_button != null) {
-    //     newPost_button.addEventListener('click', CharTweet());
-    // }
-    // if (newPost_container != null) {
-    //     newPost_container.addEventListener('keyup', CharTweet())
-    // }
 
     load_tweet()
     getNum_comments()

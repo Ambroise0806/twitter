@@ -31,7 +31,6 @@ if(isset($nom) && isset($pseudo) && isset($email) && isset($password) && isset($
 if(isset($email) && isset($password)){
     $con->logIn($email, $password);
 }
-
 ?>
 
 <!DOCTYPE html>
