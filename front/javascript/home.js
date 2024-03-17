@@ -3,11 +3,11 @@ document.addEventListener('DOMContentLoaded', function () {
     let myLoginModal = document.getElementById('myLoginModal');
     let closeLoginModal = document.getElementById('closeLoginModal');
 
-    loginModal.addEventListener('click', function() {
+    loginModal.addEventListener('click', function () {
         myLoginModal.classList.remove('hidden');
     });
 
-    closeLoginModal.addEventListener('click', function() {
+    closeLoginModal.addEventListener('click', function () {
         myLoginModal.classList.add('hidden');
     });
 
@@ -15,11 +15,11 @@ document.addEventListener('DOMContentLoaded', function () {
     let newAccountModal = document.getElementById('newAccountModal');
     let closeAccountModal = document.getElementById('closeAccountModal');
 
-    accountModal.addEventListener('click', function() {
+    accountModal.addEventListener('click', function () {
         newAccountModal.classList.remove('hidden');
     });
 
-    closeAccountModal.addEventListener('click', function() {
+    closeAccountModal.addEventListener('click', function () {
         newAccountModal.classList.add('hidden');
     });
 
@@ -33,25 +33,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById("jour_naissance").innerHTML = day_options;
 
-    let year_list_start = 2024; 
+    let year_list_start = 2024;
     let year_list_end = 1904;
     let year_options = "";
 
     for (let y = year_list_start; y >= year_list_end; y--) {
         year_options += "<option name'" + y + "'>" + y + "</option>"
     }
-    document.getElementById("annee_naissance").innerHTML = year_options;
-
-    // let textArea = document.getElementById("textbox");
-    // let charCount = document.getElementById("char_count");
-    // let maxNumChars = 140;
-
-    // function charactersCount() {
-    //     let numOfChars = textArea.value.length;
-    //     let counter = maxNumChars - numOfChars;
-    //     charCount.textContent = counter + "/140";
-    // }
-
-    // textArea.addEventListener("input", charactersCount);
-
+    document.getElementById("annee_naissance").innerHTML = year_options;      
 });
