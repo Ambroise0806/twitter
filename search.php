@@ -31,7 +31,7 @@ require ('./back/follower.php');
                 <div class="flex items-center justify-start rtl:justify-end">
                     <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar"
                         aria-controls="logo-sidebar" type="button"
-                        class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                        class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
                         <span class="sr-only">Open sidebar</span>
                         <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -53,18 +53,18 @@ require ('./back/follower.php');
                                 class="flex text-sm bg-gray-900 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                                 aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                 <span class="sr-only">Open user menu</span>
-                                <img class="w-8 h-8 rounded-full ring-2 ring-gray-400 dark:ring-gray-500" src=""
-                                    alt="user photo">
+                                <img class="w-8 h-8 rounded-full ring-2 ring-gray-400 dark:ring-gray-500"
+                                src="/uploads/<?php echo htmlspecialchars($user['profile_picture']);?>" alt="user photo">
                             </button>
                         </div>
                         <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
                             id="dropdown-user">
                             <div class="px-4 py-3" role="none">
                                 <p class="text-sm text-gray-900 dark:text-white" role="none">
-                                    Nico Robin
+                                <?php echo htmlspecialchars($user['username'] . ' ') ?>
                                 </p>
                                 <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                                    nicorobin@mugiwara.com
+                                <?php echo htmlspecialchars($user['mail'] . ' ') ?>
                                 </p>
                             </div>
                             <ul class="py-1" role="none">
@@ -75,7 +75,7 @@ require ('./back/follower.php');
                                 </li>
 
                                 <li>
-                                    <a href="index.php"
+                                    <a href="./back/logout.php"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem">Sign out</a>
                                 </li>
@@ -88,12 +88,15 @@ require ('./back/follower.php');
     </nav>
 
     <aside id="logo-sidebar"
-        class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full xl:translate-x-0"
+        class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full lg:translate-x-0"
         aria-label="Sidebar">
         <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-900">
-            <a href="homepage.php" class="flex items-center ps-2.5 mb-5">
+            <a href="homepage.php" class="flex items-center ps-2.5 mb-8">
                 <i class="fa-brands fa-x-twitter p-2 bg-blue-200 rounded-full dark:bg-white"></i></a>
-            <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">X</span>
+            <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M13.795 10.533 20.68 2h-3.073l-5.255 6.517L7.69 2H1l7.806 10.91L1.47 22h3.074l5.705-7.07L15.31 22H22l-8.205-11.467Zm-2.38 2.95L9.97 11.464 4.36 3.627h2.31l4.528 6.317 1.443 2.02 6.018 8.409h-2.31l-4.934-6.89Z"/>
+</svg>
+</span>
             </a>
             <ul class="space-y-2 font-medium">
                 <li>
@@ -137,7 +140,7 @@ require ('./back/follower.php');
                     </a>
                 </li>
                 <li>
-                    <a href="home.php"
+                    <a href="./back/logout.php"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
@@ -166,7 +169,7 @@ require ('./back/follower.php');
             </ul>
         </div>
     </aside>
-    </header>
+</header>
 
     <main class="" style="margin-top: 30%; margin-bottom: 10%;">
         <button type="submit" id="searchBtnProfile"
@@ -229,97 +232,95 @@ require ('./back/follower.php');
         <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
         <div
-            class="fixed z-50 w-full h-16 max-w-lg -translate-x-1/2 bg-white border border-gray-200 bottom-0 left-1/2 dark:bg-gray-700 dark:border-gray-600">
-            <div class="grid h-full max-w-lg grid-cols-5 mx-auto">
-                <button data-tooltip-target="tooltip-home" type="button"
-                    class="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
-                    <a href="homepage.php">
-                        <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                            viewBox="0 0 20 20">
-                            <path
-                                d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
-                    </a>
-                    </svg>
-                    <span class="sr-only">Home</span>
-                </button>
-                <div id="tooltip-home" role="tooltip"
-                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    Home
-                    <div class="tooltip-arrow" data-popper-arrow></div>
-                </div>
-
-                <button data-tooltip-target="tooltip-search" type="button"
-                    class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-                    <a href="search.php">
-                        <svg class="w-5 h-5 mb-1 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
-                            id="iconSearch" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                                d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
-                    </a>
-                    </svg>
-                    <span class="sr-only">Search</span>
-                </button>
-                <div id="tooltip-search" role="tooltip"
-                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    Search
-                    <div class="tooltip-arrow" data-popper-arrow></div>
-                </div>
-
-                <div class="flex items-center justify-center">
-                    <button data-tooltip-target="tooltip-new" type="button"
-                        class="inline-flex items-center justify-center w-10 h-10 font-medium bg-blue-600 rounded-full hover:bg-blue-700 group focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800">
-                        <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 18 18">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 1v16M1 9h16" />
-                        </svg>
-                        <span class="sr-only">New tweet</span>
-                    </button>
-                </div>
-                <div id="tooltip-new" role="tooltip"
-                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    Add new tweet
-                    <div class="tooltip-arrow" data-popper-arrow></div>
-                </div>
-
-                <button data-tooltip-target="tooltip-inbox" type="button"
-                    class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-                    <a href="inbox.php">
-                        <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"" aria-hidden="
-                            true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                                d="m3.5 5.5 7.9 6c.4.3.8.3 1.2 0l7.9-6M4 19h16c.6 0 1-.4 1-1V6c0-.6-.4-1-1-1H4a1 1 0 0 0-1 1v12c0 .6.4 1 1 1Z" />
-                    </a>
-                    </svg>
-                    </svg>
-                    <span class="sr-only">Inbox</span>
-                </button>
-                <div id="tooltip-inbox" role="tooltip"
-                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    Inbox
-                    <div class="tooltip-arrow" data-popper-arrow></div>
-                </div>
-
-                <button data-tooltip-target="tooltip-profile" type="button"
-                    class="inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
-                    <a href="profile.php">
-                        <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                            viewBox="0 0 20 20">
-                            <path
-                                d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
-                    </a>
-                    </svg>
-                    <span class="sr-only">Profile</span>
-                </button>
-                <div id="tooltip-profile" role="tooltip"
-                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    Profile
-                    <div class="tooltip-arrow" data-popper-arrow></div>
-                </div>
+        class="fixed z-50 w-full h-16 max-w-lg -translate-x-1/2 bg-white border border-gray-200 bottom-0 left-1/2 dark:bg-gray-700 dark:border-gray-600">
+        <div class="grid h-full max-w-lg grid-cols-5 mx-auto">
+            <button data-tooltip-target="tooltip-home" type="button"
+                class="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                <a href="homepage.php">
+                    <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
+                </a>
+                </svg>
+                <span class="sr-only">Home</span>
+            </button>
+            <div id="tooltip-home" role="tooltip"
+                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                Home
+                <div class="tooltip-arrow" data-popper-arrow></div>
             </div>
+
+            <button data-tooltip-target="tooltip-search" type="button"
+                class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                <a href="search.php">
+                    <svg class="w-5 h-5 mb-1 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+                        id="iconSearch" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                            d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+                </a>
+                </svg>
+                <span class="sr-only">Search</span>
+            </button>
+            <div id="tooltip-search" role="tooltip"
+                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                Search
+                <div class="tooltip-arrow" data-popper-arrow></div>
+            </div>
+
+            <div class="flex items-center justify-center">
+                <button data-tooltip-target="tooltip-new" type="button"
+                    class="inline-flex items-center justify-center w-10 h-10 font-medium bg-blue-600 rounded-full hover:bg-blue-700 group focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800">
+                    <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 18 18">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 1v16M1 9h16" />
+                    </svg>
+                    <span class="sr-only">New tweet</span>
+                </button>
+            </div>
+            <div id="tooltip-new" role="tooltip"
+                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                Add new tweet
+                <div class="tooltip-arrow" data-popper-arrow></div>
+            </div>
+
+            <button data-tooltip-target="tooltip-inbox" type="button"
+                class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                <a href="inbox.php">
+                    <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"" aria-hidden="
+                        true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                            d="m3.5 5.5 7.9 6c.4.3.8.3 1.2 0l7.9-6M4 19h16c.6 0 1-.4 1-1V6c0-.6-.4-1-1-1H4a1 1 0 0 0-1 1v12c0 .6.4 1 1 1Z" />
+                </a>
+                </svg>
+                </svg>
+                <span class="sr-only">Inbox</span>
+            </button>
+            <div id="tooltip-inbox" role="tooltip"
+                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                Inbox
+                <div class="tooltip-arrow" data-popper-arrow></div>
+            </div>
+
+            <button data-tooltip-target="tooltip-profile" type="button"
+                class="inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                <a href="profile.php">
+                    <svg class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
+                </a>
+                </svg>
+                <span class="sr-only">Profile</span>
+            </button>
+            <div id="tooltip-profile" role="tooltip"
+                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                Profile
+                <div class="tooltip-arrow" data-popper-arrow></div>
+            </div>
+        </div>
     </main>
 </body>
 

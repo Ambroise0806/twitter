@@ -26,10 +26,12 @@ if (isset($_POST["annee_naissance"])) {
 $con = new Connexion('twitter');
 if(isset($nom) && isset($pseudo) && isset($email) && isset($password) && isset($mois) && isset($jour) && isset($annee)){
     $con->register($nom, $pseudo, $email, $password, $jour, $mois, $annee);
-}
-if(isset($email) && isset($password) && !isset($nom) && !isset($pseudo) && !isset($mois) && !isset($jour) && !isset($annee)){
     $con->logIn($email, $password);
 }
+if(isset($email) && isset($password)){
+    $con->logIn($email, $password);
+}
+
 ?>
 
 <!DOCTYPE html>
