@@ -1,40 +1,86 @@
 <?php
-ob_start();
-session_start();
+class Connexion
+{
 
-class Connection {
-    private $base;
-    private $host = "localhost";
-    private $dbName = "twitterForAll";
-    private $user = "ambroise";
-    private $password = "youhou";
+    private $db_host;
+    private $db_user;
+    private $db_pass;
+    private $db_name;
+    private $pdo;
     private $salt = "vive le projet tweet_academy";
 
-    public function __construct() {
-        try {
-            $this->base = new PDO("mysql:host=$this->host;dbname=$this->dbName", $this->user, $this->password);
-            $this->base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (Exception $e) {
-            echo "" . $e->getMessage();
+    public function __construct($db_name, $db_host = "localhost", $db_user = "ambroise", $db_pass = "youhou")
+    {
+        $this->db_host = $db_host;
+        $this->db_name = $db_name;
+        $this->db_user = $db_user;
+        $this->db_pass = $db_pass;
+    }
+
+    private function getPDO()
+    {
+        if ($this->pdo === NULL) {
+            try {
+                $dsn = "mysql:host=$this->db_host;dbname=$this->db_name";
+                $this->pdo = new PDO($dsn, $this->db_user, $this->db_pass);
+                $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                throw new InvalidArgumentException("Database error: " . $e->getMessage());
+
+            }
+        }
+        return $this->pdo;
+    }
+
+    
+    function register($nom, $pseudo, $email, $mdp, $jour, $mois, $annee) {
+        $date = "$annee-$mois-$jour";
+        if ($nom != "" && $pseudo != "" && $email != "" && $mdp != "" && $date != "") {
+            $hash = hash('ripemd160', $this->salt . $mdp);
+            $pp = "flemme";
+            $banner = "reflemme";
+            try {
+                $con = $this->getPDO()->prepare("INSERT INTO user (username, at_user_name, profile_picture, banner, mail, password, birthdate) VALUES (:nom, :pseudo,'flemme', 'reflemme', :email, :mdp, :date)");
+                $con->bindParam(':nom', $nom);
+                $con->bindParam(':pseudo', $pseudo);
+                $con->bindParam(':email', $email);
+                $con->bindParam(':mdp', $hash);
+                $con->bindParam(':date', $date);
+                $con->execute();
+                session_start();
+                $_SESSION['username'] = $nom;
+                $_SESSION['at_user_name'] = $pseudo;
+                $_SESSION['profile_picture'] = $pp;
+                $_SESSION['banner'] = $banner;
+                $_SESSION['mail'] = $email;
+                $_SESSION['password'] = $hash;
+                $_SESSION['birthdate'] = $date;
+                header("Location: profile.php");
+            } catch (Exception $e) {
+                echo "Erreur lors de l'insertion de l'utilisateur : " . $e->getMessage();
+            }
         }
     }
 
-    function connect($email, $mdp) {
+    function logIn($email, $mdp) {
         if ($email != "" && $mdp != "") {
             try {
-                $con = $this->base->prepare("SELECT * FROM user WHERE mail = :email");
+                $con = $this->getPDO()->prepare("SELECT * FROM user WHERE mail = :email");
                 $hash = hash('ripemd160', $this->salt . $mdp);
                 $con->bindParam(':email', $email);
                 $con->execute();
                 $user = $con->fetch(PDO::FETCH_ASSOC);
                 if ($user) {
                     if ($hash === $user['password']) {
-                        $_SESSION['mail'] = $_POST['mail'];
-                        $_SESSION['mdp'] = $_POST['mdp'];
-                        $_SESSION['nom'] = $user['username'];
-                        $_SESSION['pseudo'] = $user['at_user_name'];
-                        $_SESSION['born'] = $user['birthdate']; 
-                        header("Location: login.php");
+                        session_start();
+                        // $_SESSION['username'] = $nom;
+                        // $_SESSION['at_user_name'] = $pseudo;
+                        // $_SESSION['profile_picture'] = $pp;
+                        // $_SESSION['banner'] = $banner;
+                        // $_SESSION['mail'] = $email;
+                        // $_SESSION['password'] = $hash;
+                        // $_SESSION['birthdate'] = $date;
+                        header("Location: profile.php");
                         exit();
                     } else {
                         echo 'Mot de passe incorrect.';
@@ -45,39 +91,6 @@ class Connection {
             } catch (Exception $e) {
                 echo "Erreur lors de la connexion : " . $e->getMessage();
             }
-        } else {
-            echo "Veuillez fournir une adresse e-mail et un mot de passe.";
         }
     } 
 }
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $form = new Connection();
-    $form->connect($_POST['mail'], $_POST['mdp']);
-}
-?>
-
-
-<!DOCTYPE html>
-<html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="">
-        <script src="inscription.js"></script>
-        <title>Page de connexion</title>
-    </head> 
-    <body>
-    <form action="" method="post">
-    <label for="email">E-mail :</label>
-    <input type="email" id="mail" name="mail" required><br>
-
-    <label for="mdp">Mot de passe :</label>
-    <input type="password" id="mdp" name="mdp" required><br>
-
-    <input type="submit" value="Se connecter">
-    <a href="inscrription.php">Vous n'êtes pas encore inscrit ?</a>
-    </form>
-    </body>
-</html>
-
-
