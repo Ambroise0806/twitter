@@ -80,7 +80,6 @@ function getNum_retweet() {
     xhttp.send()
     number_retweet.forEach(element => {
         document.getElementById('tweet_id_' + element[0]).childNodes[1].childNodes[13].childNodes[1].childNodes[7].innerHTML = element[1]
-
     });
 }
 

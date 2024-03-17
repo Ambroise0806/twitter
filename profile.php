@@ -280,7 +280,6 @@ if (isset($_SESSION['mail'])) {
                     echo "Sorry, we weren't able to update your profile.";
                 }
             }
-            print_r($user)
             ?>
 
             <div class="text-gray-900 font-bold text-lg dark:text-white">
