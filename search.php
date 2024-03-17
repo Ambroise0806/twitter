@@ -137,11 +137,10 @@ require('showProfil.php');
 
     <?php
         foreach ($res as $rr) {
-            echo "<tr>";
-            echo "<td>{$rr["username"]}<br></td>";
-            echo "<td>";
-            // echo '<input type="hidden" name="id_user" value="'. $rr["id_user"] .'">';
-            // echo '<input type="submit" name = "follow" value= "follow">';
+            foreach ($res as $rr) {
+                echo "<tr>";
+                echo "<td><a href='profile.php?username={$rr["username"]}'>{$rr["username"]}</a><br></td>";
+            }
         }
     ?>
 
