@@ -29,9 +29,11 @@ if (isset ($_SESSION['mail'])) {
     <script src="front/javascript/homepage.js"></script>
     <script src="front/javascript/light_mode.js"></script>
     <script src="front/javascript/autocompletion.js"></script>
+    <script src="front/javascript/inbox.js"></script>
     <script src="front/javascript/comms.js"></script>
     <script src="front/javascript/retweet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emoji-button@0.6.0/dist/index.min.js"></script>
     <title>Twitter</title>
 </head>
 
@@ -42,7 +44,7 @@ if (isset ($_SESSION['mail'])) {
                 <div class="flex items-center justify-start rtl:justify-end">
                     <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar"
                         aria-controls="logo-sidebar" type="button"
-                        class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                        class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
                         <span class="sr-only">Open sidebar</span>
                         <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -72,10 +74,10 @@ if (isset ($_SESSION['mail'])) {
                             id="dropdown-user">
                             <div class="px-4 py-3" role="none">
                                 <p class="text-sm text-gray-900 dark:text-white" role="none">
-                                    Nico Robin
+                                <?php echo htmlspecialchars($user['username'] . ' ') ?>
                                 </p>
                                 <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                                    nicorobin@mugiwara.com
+                                <?php echo htmlspecialchars($user['mail'] . ' ') ?>
                                 </p>
                             </div>
                             <ul class="py-1" role="none">
@@ -99,12 +101,15 @@ if (isset ($_SESSION['mail'])) {
     </nav>
 
     <aside id="logo-sidebar"
-        class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full xl:translate-x-0"
+        class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full lg:translate-x-0"
         aria-label="Sidebar">
         <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-900">
-            <a href="homepage.php" class="flex items-center ps-2.5 mb-5">
+            <a href="homepage.php" class="flex items-center ps-2.5 mb-8">
                 <i class="fa-brands fa-x-twitter p-2 bg-blue-200 rounded-full dark:bg-white"></i></a>
-            <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">X</span>
+            <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M13.795 10.533 20.68 2h-3.073l-5.255 6.517L7.69 2H1l7.806 10.91L1.47 22h3.074l5.705-7.07L15.31 22H22l-8.205-11.467Zm-2.38 2.95L9.97 11.464 4.36 3.627h2.31l4.528 6.317 1.443 2.02 6.018 8.409h-2.31l-4.934-6.89Z"/>
+</svg>
+</span>
             </a>
             <ul class="space-y-2 font-medium">
                 <li>
@@ -177,15 +182,15 @@ if (isset ($_SESSION['mail'])) {
             </ul>
         </div>
     </aside>
-    </header>
+</header>
 
     <main class="flex flex-col m-2" style="margin-top: 30%; margin-bottom: 20%;">
 
         <!-- Ajouter un tweet au fil -->
         <form action="" autocomplete="off" method="POST">
             <div
-                class="mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/3">
-                <div class="px-4 py-2 bg-gray-200 rounded-t-lg dark:bg-gray-900">
+                class="mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                <div class="px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 bg-gray-200 rounded-t-lg dark:bg-gray-900">
                     <input name="newTweet" id="newPost_container" rows="4"
                         class="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-900 focus:ring-0 dark:text-white dark:placeholder-gray-400"
                         placeholder="What is happening !?" required />
@@ -204,15 +209,16 @@ if (isset ($_SESSION['mail'])) {
                         </svg>
                         <span class="sr-only">Attach file</span>
                     </button>
-                    <button type="button"
-                        class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                            viewBox="0 0 16 20">
-                            <path
-                                d="M8 0a7.992 7.992 0 0 0-6.583 12.535 1 1 0 0 0 .12.183l.12.146c.112.145.227.285.326.4l5.245 6.374a1 1 0 0 0 1.545-.003l5.092-6.205c.206-.222.4-.455.578-.7l.127-.155a.934.934 0 0 0 .122-.192A8.001 8.001 0 0 0 8 0Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
-                        </svg>
-                        <span class="sr-only">Set location</span>
-                    </button>
+                    <button type="button" id="emojiButton"
+                                class="p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M13.408 7.5h.01m-6.876 0h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM4.6 11a5.5 5.5 0 0 0 10.81 0H4.6Z" />
+                                </svg>
+                                <span class="sr-only">Add emoji</span>
+                            </button>
                     <button type="button"
                         class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"

@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const queryString = window.location.search;
     const searchParams = new URLSearchParams(queryString);
     let searched_hashtag = searchParams.get("hashtag")
-    let input = document.getElementById('search')
+    let input = document.getElementById('newPost_container')
     input.value = searched_hashtag
     let tmp;
     let tmp0;
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     getTweet_withHashtag();
 
-    let tweet_byHashtag = []
+    let tweet_byHashtag = []   
     function getTweet_byHashtag(tmp) {
         for (let i = 0; i < tmp.length; i++) {
             if (tmp[i]['hashtag'].trim() == input.value) {
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         xhttp.send()
     }
-
+    
     getAllTweet();
     
     function displayTweet(tweet_byHashtag, tmp0) {
@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
             createTweet(tmp0, element)
         });
     }
+
     displayTweet(tweet_byHashtag, tmp0);
     
     function createTweet(tmp0, element) {
@@ -284,24 +285,4 @@ document.addEventListener('DOMContentLoaded', function () {
         span4.innerHTML = tmp0[element-1][3]
         p.innerHTML = tmp0[element-1][4]
     }
-
-    let searchBtnProfile = document.getElementById('searchBtnProfile');
-    let searchBtnHashtag = document.getElementById('searchBtnHashtag');
-
-    searchBtnProfile.addEventListener('click', function() {
-        console.log('searchBtnProfile clicked');
-        if (searchBtnHashtag.classList.contains('hidden')) {
-            searchBtnHashtag.classList.remove('hidden');
-        } else {
-            searchBtnHashtag.classList.add('hidden');
-        }
-    });
-    searchBtnHashtag.addEventListener('click', function() {
-        console.log('searchBtnHashtag clicked');
-        if (searchBtnProfile.classList.contains('hidden')) {
-            searchBtnProfile.classList.remove('hidden');
-    } else {
-        searchBtnProfile.classList.add('hidden');
-    }
-    });
 });
