@@ -1,18 +1,20 @@
 <?php
 session_start();
+if (!isset($_SESSION["mail"])) {
+    header("Location: index.php");
+}
+
 include './back/connexion.php';
 $con = new Connexion('twitter');
 
-if (isset ($_SESSION['mail'])) {
+if (isset($_SESSION['mail'])) {
     $userMail = $_SESSION['mail'];
     $sql = "SELECT * FROM user WHERE mail = :email";
     $statement = $con->getPDO()->prepare($sql);
     $statement->bindParam(':email', $userMail);
     $statement->execute();
     $user = $statement->fetch(PDO::FETCH_ASSOC);
-} else {
-    echo "No user found.";
-}
+} 
 ?>
 <!DOCTYPE html>
 <html lang="en" class="dark">
@@ -86,7 +88,7 @@ if (isset ($_SESSION['mail'])) {
                                 </li>
 
                                 <li>
-                                    <a href="index.php"
+                                    <a href="./back/logout.php"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem">Sign out</a>
                                 </li>
@@ -148,7 +150,7 @@ if (isset ($_SESSION['mail'])) {
                     </a>
                 </li>
                 <li>
-                    <a href="home.php"
+                    <a href="./back/logout.php"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">

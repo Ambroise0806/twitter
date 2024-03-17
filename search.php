@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION["mail"])) {
+    header("Location: index.php");
+    exit();
+}
 require ('back/follower.php');
 ?>
 <!DOCTYPE html>
@@ -81,7 +85,7 @@ require ('back/follower.php');
                                 </li>
 
                                 <li>
-                                    <a href="#"
+                                    <a href="./back/logout.php"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem">Sign out</a>
                                 </li>
@@ -143,7 +147,7 @@ require ('back/follower.php');
                     </a>
                 </li>
                 <li>
-                    <a href="home.php"
+                    <a href="./back/logout.php"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
@@ -176,16 +180,15 @@ require ('back/follower.php');
 
     <body>
         <main class="flex flex-col m-2" style="margin-top: 30%; margin-bottom: 20%;">
-
-            <?php
-            foreach ($res as $rr) {
+        <h1>Profile:</h1>
+        <?php
                 foreach ($res as $rr) {
                     echo "<tr>";
-                    echo "<td><a href='profile.php?username={$rr["username"]}'>{$rr["username"]}</a><br></td>";
+                    echo "<td><a href='profile.php?at_user_name={$rr["at_user_name"]}'>@{$rr["at_user_name"]}</a><br></td>";
                 }
-            }
-            ?>
-
+                ?>
+        <h1>Hashtag:</h1>
+        <div id="tweet"></div>
         </main>
         <main id="tweet"></main>
         <!-- Footer -->

@@ -41,10 +41,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         xhttp.send()
     }
-
+    
     getAllTweet();
     
     function displayTweet(tweet_byHashtag, tmp0) {
+        console.log(tweet_byHashtag)
         tweet_byHashtag.forEach(element => {
             createTweet(tmp0, element)
         });
@@ -279,9 +280,9 @@ document.addEventListener('DOMContentLoaded', function () {
         hr.setAttribute('class', 'h-px my-8 bg-gray-200 border-0 dark:bg-gray-700')
         main.appendChild(hr)
 
-        h1.innerHTML = tmp0[element-1][1]
-        span2.innerHTML = tmp0[element-1][2]
-        span4.innerHTML = tmp0[element-1][3]
-        p.innerHTML = tmp0[element-1][4]
+        h1.innerHTML = tmp0[element-3][1]
+        span2.innerHTML = tmp0[element-3][2]
+        span4.innerHTML = tmp0[element-3][3]
+        p.innerHTML = tmp0[element-3][4]
     }
 });

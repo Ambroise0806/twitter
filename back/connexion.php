@@ -34,7 +34,6 @@ class Connexion
 
     
     function register($nom, $pseudo, $email, $mdp, $jour, $mois, $annee) {
-        session_start();
         $date = "$annee-$mois-$jour";
         if ($nom != "" && $pseudo != "" && $email != "" && $mdp != "" && $date != "") {
             $hash = hash('ripemd160', $this->salt . $mdp);
@@ -45,10 +44,12 @@ class Connexion
                 $con->bindParam(':email', $email);
                 $con->bindParam(':mdp', $hash);
                 $con->bindParam(':date', $date);
-                $con->execute();
-                $_SESSION['email'] = $email;
-                header("Location: profile.php");
-                exit();
+                if($con->execute()) {
+                    session_start();
+                    $_SESSION['mail'] = $email;
+                    header("Location: profile.php");
+                }
+
             } catch (Exception $e) {
                 echo "Erreur lors de l'insertion de l'utilisateur : " . $e->getMessage();
             }
@@ -68,7 +69,6 @@ class Connexion
                         session_start();
                         $_SESSION['mail'] = $user['mail'];
                         header("Location: profile.php");
-                        // exit();
                     } else {
                         echo 'Mot de passe incorrect.';
                     }
